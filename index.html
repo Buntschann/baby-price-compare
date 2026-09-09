@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ベビー最安比較">
+<meta name="theme-color" content="#f7f7f5">
+<title>ベビー大物 最安比較</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#fff; --text:#222; --muted:#6b6b6b; --line:#deded8;
+  --accent:#333; --good:#176b3a; --bad:#a33;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1100px;margin:auto;padding:18px}
+h1{font-size:24px;margin:4px 0 6px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.grid .wide{grid-column:span 2}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+input,select,textarea,button{font:inherit}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;background:white}
+textarea{min-height:70px;resize:vertical}
+button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer}
+.primary{background:#222;color:white}
+.secondary{background:#ecece7;color:#222}
+.danger{background:#f5e4e4;color:#8b2222}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.toolbar input{max-width:260px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+th{font-size:12px;color:var(--muted);position:sticky;top:0;background:var(--card)}
+.price{font-weight:700;white-space:nowrap}
+.best{color:var(--good)}
+.small{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#efefe9;font-size:11px}
+.bestbadge{background:#e4f3e9;color:var(--good);font-weight:700}
+a{color:inherit}
+.empty{text-align:center;padding:28px;color:var(--muted)}
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr 1fr}
+  .grid .wide{grid-column:span 2}
+  .tablewrap{overflow:auto}
+  table{min-width:950px}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .grid .wide{grid-column:span 1}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ベビー大物 最安比較</h1>
+  <div class="sub">ベビーカー・チャイルドシートなどの「どこで買うと実質いくら？」を比較するためのメモアプリ。入力データはこの端末のSafari内に保存されます。</div>
+
+  <div class="card">
+    <div style="margin-bottom:12px;padding:10px;border-radius:10px;background:#f0f0ec;font-size:13px">このアプリの登録データは <strong>SafariのlocalStorage</strong> に保存されます。GitHubには価格データは送信されません。</div>
+    <div class="grid">
+      <div>
+        <label>カテゴリ</label>
+        <select id="category">
+          <option>ベビーカー</option>
+          <option>チャイルドシート</option>
+          <option>抱っこ紐</option>
+          <option>ベビーベッド</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div>
+        <label>商品名</label>
+        <input id="product" placeholder="例：スゴカル minimo plus">
+      </div>
+      <div>
+        <label>販売店</label>
+        <input id="store" placeholder="例：Amazon">
+      </div>
+      <div>
+        <label>販売価格（税込）</label>
+        <input id="price" type="number" min="0" inputmode="numeric" placeholder="53800">
+      </div>
+
+      <div>
+        <label>クーポン種別</label>
+        <select id="couponType">
+          <option value="none">なし</option>
+          <option value="fixed">○円引き</option>
+          <option value="percent">○％引き</option>
+        </select>
+      </div>
+      <div>
+        <label>クーポン値</label>
+        <input id="couponValue" type="number" min="0" step="0.1" placeholder="例：5000 / 10">
+      </div>
+      <div>
+        <label>ポイント還元率（％）</label>
+        <input id="pointRate" type="number" min="0" step="0.1" placeholder="例：5">
+      </div>
+      <div>
+        <label>固定ポイント</label>
+        <input id="fixedPoints" type="number" min="0" inputmode="numeric" placeholder="例：2000">
+      </div>
+
+      <div>
+        <label>送料</label>
+        <input id="shipping" type="number" min="0" inputmode="numeric" value="0">
+      </div>
+      <div>
+        <label>その他値引き</label>
+        <input id="otherDiscount" type="number" min="0" inputmode="numeric" value="0">
+      </div>
+      <div>
+        <label>確認日</label>
+        <input id="checkedAt" type="date">
+      </div>
+      <div>
+        <label>URL</label>
+        <input id="url" placeholder="https://...">
+      </div>
+
+      <div class="wide">
+        <label>条件・メモ</label>
+        <textarea id="notes" placeholder="例：らくらくベビー10%OFF対象、色はブラックのみ、9/15まで"></textarea>
+      </div>
+      <div class="wide">
+        <label>計算イメージ</label>
+        <div id="preview" style="padding:10px;border:1px dashed var(--line);border-radius:9px;min-height:70px"></div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="primary" id="addBtn">比較候補に追加</button>
+      <button class="secondary" id="clearForm">入力欄をクリア</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <strong>比較一覧</strong>
+      <input id="search" placeholder="商品名・店名で絞り込み">
+      <select id="sort">
+        <option value="effective">実質価格が安い順</option>
+        <option value="price">販売価格が安い順</option>
+        <option value="date">確認日が新しい順</option>
+      </select>
+      <button class="secondary" id="exportBtn">CSV書き出し</button>
+      <button class="danger" id="deleteAllBtn">全件削除</button>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>商品</th>
+            <th>販売店</th>
+            <th>販売価格</th>
+            <th>クーポン等</th>
+            <th>ポイント</th>
+            <th>実質価格</th>
+            <th>確認日</th>
+            <th>メモ</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div id="empty" class="empty">まだ比較候補がありません。</div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let rows = JSON.parse(localStorage.getItem("babyBigItemCompare") || "[]");
+
+function num(id){ return Number($(id).value || 0); }
+function yen(n){ return Math.round(n).toLocaleString("ja-JP") + "円"; }
+
+function calcFromForm(){
+  const price=num("price");
+  const couponType=$("couponType").value;
+  const couponValue=num("couponValue");
+  let coupon=0;
+  if(couponType==="fixed") coupon=couponValue;
+  if(couponType==="percent") coupon=price*couponValue/100;
+  coupon=Math.min(coupon,price);
+
+  const other=num("otherDiscount");
+  const shipping=num("shipping");
+  const afterDiscount=Math.max(0,price-coupon-other);
+  const points=afterDiscount*num("pointRate")/100 + num("fixedPoints");
+  const effective=afterDiscount+shipping-points;
+  return {price,coupon,other,shipping,afterDiscount,points,effective};
+}
+
+function updatePreview(){
+  const c=calcFromForm();
+  $("preview").innerHTML = `
+    <div>販売価格 ${yen(c.price)} − 値引き ${yen(c.coupon+c.other)} ＋ 送料 ${yen(c.shipping)}</div>
+    <div>ポイント相当 ${yen(c.points)}</div>
+    <div style="margin-top:6px;font-size:20px;font-weight:700">実質 ${yen(c.effective)}</div>
+    <div class="small">※ ポイントを1pt＝1円として計算。ポイント付与対象金額は「値引き後」と仮定。</div>`;
+}
+document.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",updatePreview));
+
+function save(){
+  localStorage.setItem("babyBigItemCompare",JSON.stringify(rows));
+  render();
+}
+
+function add(){
+  if(!$("product").value.trim() || !$("store").value.trim() || !num("price")){
+    alert("商品名・販売店・販売価格を入力してください。");
+    return;
+  }
+  const c=calcFromForm();
+  rows.push({
+    id:crypto.randomUUID(),
+    category:$("category").value,
+    product:$("product").value.trim(),
+    store:$("store").value.trim(),
+    price:c.price,
+    couponType:$("couponType").value,
+    couponValue:num("couponValue"),
+    coupon:c.coupon,
+    pointRate:num("pointRate"),
+    fixedPoints:num("fixedPoints"),
+    points:c.points,
+    shipping:c.shipping,
+    otherDiscount:c.other,
+    effective:c.effective,
+    checkedAt:$("checkedAt").value,
+    url:$("url").value.trim(),
+    notes:$("notes").value.trim()
+  });
+  save();
+  clearForm(false);
+}
+$("addBtn").onclick=add;
+
+function clearForm(full=true){
+  ["product","store","price","couponValue","pointRate","fixedPoints","url","notes"].forEach(id=>$(id).value="");
+  $("shipping").value="0";
+  $("otherDiscount").value="0";
+  $("couponType").value="none";
+  if(full) $("category").value="ベビーカー";
+  $("checkedAt").value=new Date().toISOString().slice(0,10);
+  updatePreview();
+}
+$("clearForm").onclick=()=>clearForm(true);
+
+function render(){
+  const q=$("search").value.trim().toLowerCase();
+  let list=rows.filter(r => (r.product+" "+r.store+" "+r.category+" "+r.notes).toLowerCase().includes(q));
+  const sort=$("sort").value;
+  list.sort((a,b)=>{
+    if(sort==="effective") return a.effective-b.effective;
+    if(sort==="price") return a.price-b.price;
+    return (b.checkedAt||"").localeCompare(a.checkedAt||"");
+  });
+
+  const bestByProduct={};
+  rows.forEach(r=>{
+    const k=r.product.toLowerCase();
+    if(bestByProduct[k]==null || r.effective<bestByProduct[k]) bestByProduct[k]=r.effective;
+  });
+
+  $("tbody").innerHTML=list.map(r=>{
+    const best=Math.abs(r.effective-bestByProduct[r.product.toLowerCase()])<0.5;
+    const couponText = r.coupon ? `値引き ${yen(r.coupon+r.otherDiscount)}` : (r.otherDiscount ? `値引き ${yen(r.otherDiscount)}` : "—");
+    const pointText = r.points ? `${yen(r.points)}相当` : "—";
+    return `<tr>
+      <td><span class="badge">${esc(r.category)}</span><br><strong>${esc(r.product)}</strong></td>
+      <td>${r.url ? `<a href="${escAttr(r.url)}" target="_blank" rel="noopener">${esc(r.store)}</a>` : esc(r.store)}</td>
+      <td class="price">${yen(r.price)}${r.shipping ? `<div class="small">送料 ${yen(r.shipping)}</div>`:""}</td>
+      <td>${couponText}</td>
+      <td>${pointText}<div class="small">${r.pointRate ? r.pointRate+"% ":""}${r.fixedPoints ? "+ "+r.fixedPoints.toLocaleString()+"pt":""}</div></td>
+      <td class="price ${best?"best":""}">${yen(r.effective)} ${best?'<span class="badge bestbadge">最安</span>':""}</td>
+      <td>${r.checkedAt||"—"}</td>
+      <td>${esc(r.notes||"—")}</td>
+      <td><button class="danger" onclick="removeRow('${r.id}')">削除</button></td>
+    </tr>`;
+  }).join("");
+
+  $("empty").style.display=list.length ? "none":"block";
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function escAttr(s){return esc(s)}
+window.removeRow=id=>{rows=rows.filter(r=>r.id!==id);save()};
+
+$("search").addEventListener("input",render);
+$("sort").addEventListener("change",render);
+$("deleteAllBtn").onclick=()=>{
+  if(confirm("すべての比較データを削除しますか？")){rows=[];save();}
+};
+
+$("exportBtn").onclick=()=>{
+  const headers=["カテゴリ","商品名","販売店","販売価格","クーポン値引き","その他値引き","送料","ポイント還元率","固定ポイント","ポイント相当","実質価格","確認日","URL","メモ"];
+  const data=rows.map(r=>[r.category,r.product,r.store,r.price,r.coupon,r.otherDiscount,r.shipping,r.pointRate,r.fixedPoints,r.points,r.effective,r.checkedAt,r.url,r.notes]);
+  const csv=[headers,...data].map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="baby-big-item-compare.csv"; a.click(); URL.revokeObjectURL(a.href);
+};
+
+clearForm(true);
+render();
+</script>
+</body>
+</html>
