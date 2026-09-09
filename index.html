@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー最安比較">
 <meta name="theme-color" content="#f6f3ee">
+<meta name="app-version" content="4.0">
 <title>ベビー大物 最安比較</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da;--bad:#a33e37;--badbg:#fae9e7}
@@ -27,13 +28,22 @@ input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px
 .modalback{position:fixed;inset:0;background:#0005;display:flex;align-items:flex-end;justify-content:center;padding:12px;z-index:10}.modal{width:min(620px,100%);max-height:86vh;overflow:auto;background:white;border-radius:18px;padding:16px}
 @media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.offer{grid-template-columns:1.2fr .8fr .9fr .9fr}.notes{grid-column:1/4}.rowactions{grid-column:4;grid-row:1/3}.metrics{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){header{display:block}.grid{grid-template-columns:1fr}.span2{grid-column:span 1}.toolbar>*{flex:1 1 auto}.toolbar input,.toolbar select{max-width:none;width:100%}.offer{grid-template-columns:1fr 1fr}.notes,.rowactions{grid-column:1/3}.rowactions{grid-row:auto}.ghead{align-items:flex-start}}
+
+.versionline{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.versionbadge{display:inline-block;font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.update-banner{background:#eaf5ee;border:1px solid #c9e5d2;border-radius:14px;padding:11px 12px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.update-banner strong{color:var(--good)}
+.update-status{font-size:11px;color:var(--muted)}
+.spin{display:inline-block;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:560px){.update-banner{align-items:flex-start;flex-direction:column}.update-banner button{width:100%}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
 <div><h1>ベビー大物 最安比較</h1><div class="sub">価格・クーポン・ポイントをまとめて「本当に安い」を比較するま。</div></div>
-<div class="actions" style="margin-top:0"><button class="ghost" id="backupBtn">バックアップ</button><button class="ghost" id="csvBtn">CSV</button></div>
+<div class="actions" style="margin-top:0"><button class="ghost" id="refreshAppBtn">最新版を再読込</button><button class="ghost" id="backupBtn">バックアップ</button><button class="ghost" id="csvBtn">CSV</button></div>
 </header>
 
 <div class="notice">旧版と同じ <b>babyBigItemCompare</b> を使うので既存記録を引き継ぎます。旧版の「ポイント」は安全側で <b>通常ポイント</b> として移行します。</div>
@@ -104,7 +114,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px
 </div></div>
 
 <script>
-const KEY="babyBigItemCompare",$=x=>document.getElementById(x);
+const APP_VERSION="4.0", KEY="babyBigItemCompare",$=x=>document.getElementById(x);
 const PRODUCTS=["クルムーヴ コンパクト JS（黒）","クルムーヴ コンパクト JS（茶）","ラクーナ エアー プラス（青）"];
 let rows=[],editing=null,view="cards",pointMode=localStorage.getItem("babyPointMode")||"normal";
 const num=v=>Number(v||0),yen=v=>Math.round(num(v)).toLocaleString("ja-JP")+"円",today=()=>new Date().toISOString().slice(0,10);
@@ -138,7 +148,80 @@ function dl(name,text,type){let b=new Blob([text],{type}),a=document.createEleme
 function jsonOut(){dl("baby-price-backup-"+today()+".json",JSON.stringify({version:3,pointMode,rows},null,2),"application/json")}
 function csvOut(){let h=["商品","カテゴリ","販売店","販売価格","クーポン","その他値引き","送料","通常pt率","通常固定pt","限定pt率","限定固定pt","通常pt","限定pt","実質_通常ptのみ","実質_全pt","★","確認日","期限","URL","メモ"],d=rows.map(r=>[r.product,r.category,r.store,r.price,r.coupon,r.otherDiscount,r.shipping,r.normalPointRate,r.normalFixedPoints,r.limitedPointRate,r.limitedFixedPoints,r.normalPoints,r.limitedPoints,r.effectiveNormal,r.effectiveAll,r.favorite?"★":"",r.checkedAt,r.expiresAt,r.url,r.notes]),csv=[h,...d].map(a=>a.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");dl("baby-price-"+today()+".csv","\uFEFF"+csv,"text/csv;charset=utf-8")}
 function importJson(file){let fr=new FileReader();fr.onload=()=>{try{let o=JSON.parse(fr.result),a=Array.isArray(o)?o:o.rows;if(!Array.isArray(a))throw 0;if(confirm(`現在のデータをバックアップの${a.length}件で置き換えますか？`)){rows=a.map(migrate);if(o.pointMode)pointMode=o.pointMode;save();setMode(pointMode);$("modal").classList.add("hidden")}}catch{alert("読み込めないJSONです。")}};fr.readAsText(file)}
-$("product").addEventListener("change",()=>{syncCategory();preview()});document.querySelectorAll("#formCard input,#formCard select,#formCard textarea").forEach(e=>e.addEventListener("input",preview));$("saveBtn").onclick=submit;$("clearBtn").onclick=()=>clearForm(true);$("cancelBtn").onclick=()=>clearForm(true);["search","productFilter","favFilter","sort"].forEach(x=>$(x).addEventListener(x==="search"?"input":"change",render));document.querySelectorAll(".viewbtn").forEach(b=>b.onclick=()=>{view=b.dataset.view;document.querySelectorAll(".viewbtn").forEach(x=>x.classList.toggle("active",x===b));render()});document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));$("backupBtn").onclick=()=>$("modal").classList.remove("hidden");$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("exportJson").onclick=jsonOut;$("csvBtn").onclick=csvOut;$("importJson").onchange=e=>{if(e.target.files[0])importJson(e.target.files[0])};$("deleteAll").onclick=()=>{if(confirm("全データを削除しますか？")){rows=[];save();$("modal").classList.add("hidden")}};load();clearForm(false);setMode(pointMode);render();
+
+function latestUrl(){
+  if(location.protocol!=="http:"&&location.protocol!=="https:") return null;
+  const u=new URL(location.href);
+  u.search="";
+  u.hash="";
+  u.searchParams.set("_appcheck",Date.now().toString());
+  return u.toString();
+}
+function extractVersion(text){
+  const m=text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i)
+        || text.match(/<meta\s+content=["']([^"']+)["']\s+name=["']app-version["']/i);
+  return m?m[1]:null;
+}
+async function fetchLatestHtml(){
+  const u=latestUrl();
+  if(!u) throw new Error("not-web");
+  const res=await fetch(u,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+  if(!res.ok) throw new Error("HTTP "+res.status);
+  return await res.text();
+}
+function applyHtml(text){
+  // localStorage is not cleared: only the app document itself is replaced.
+  document.open();
+  document.write(text);
+  document.close();
+}
+async function checkForUpdate(autoApply=true){
+  const status=$("updateStatus");
+  try{
+    status.innerHTML='<span class="spin">↻</span> 最新版を確認中…';
+    const text=await fetchLatestHtml();
+    const latest=extractVersion(text);
+    if(!latest){
+      status.textContent="最新版の確認情報を取得できませんでした";
+      return;
+    }
+    if(latest!==APP_VERSION){
+      $("updateBanner").classList.remove("hidden");
+      $("updateMessage").textContent=`v${APP_VERSION} → v${latest} に更新できます。比較データはそのまま残ります。`;
+      status.textContent=`新しい v${latest} があります`;
+      window.__latestAppHtml=text;
+      if(autoApply){
+        // A cached Home Screen Web App can update itself immediately.
+        applyHtml(text);
+      }
+    }else{
+      $("updateBanner").classList.add("hidden");
+      status.textContent=`v${APP_VERSION}・最新版`;
+    }
+  }catch(e){
+    status.textContent=location.protocol==="file:"?"公開後のWebアプリで最新版チェックが動きます":"最新版チェックに失敗しました";
+  }
+}
+async function forceRefreshApp(){
+  const btn=$("refreshAppBtn"), status=$("updateStatus");
+  const old=btn.textContent;
+  btn.disabled=true;btn.textContent="確認中…";
+  try{
+    const text=await fetchLatestHtml();
+    const latest=extractVersion(text);
+    status.textContent=latest?`v${latest} を再読込します`:"最新版を再読込します";
+    applyHtml(text);
+  }catch(e){
+    status.textContent="再読込に失敗しました。通信状態を確認してください";
+    btn.disabled=false;btn.textContent=old;
+  }
+}
+
+$("product").addEventListener("change",()=>{syncCategory();preview()});document.querySelectorAll("#formCard input,#formCard select,#formCard textarea").forEach(e=>e.addEventListener("input",preview));$("saveBtn").onclick=submit;$("clearBtn").onclick=()=>clearForm(true);$("cancelBtn").onclick=()=>clearForm(true);["search","productFilter","favFilter","sort"].forEach(x=>$(x).addEventListener(x==="search"?"input":"change",render));document.querySelectorAll(".viewbtn").forEach(b=>b.onclick=()=>{view=b.dataset.view;document.querySelectorAll(".viewbtn").forEach(x=>x.classList.toggle("active",x===b));render()});document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));$("backupBtn").onclick=()=>$("modal").classList.remove("hidden");$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("exportJson").onclick=jsonOut;$("csvBtn").onclick=csvOut;$("importJson").onchange=e=>{if(e.target.files[0])importJson(e.target.files[0])};$("deleteAll").onclick=()=>{if(confirm("全データを削除しますか？")){rows=[];save();$("modal").classList.add("hidden")}};
+$("refreshAppBtn").onclick=forceRefreshApp;
+$("applyUpdateBtn").onclick=async()=>{if(window.__latestAppHtml)applyHtml(window.__latestAppHtml);else forceRefreshApp()};
+load();clearForm(false);setMode(pointMode);render();
+setTimeout(()=>checkForUpdate(true),350);
 </script>
 </body>
 </html>
