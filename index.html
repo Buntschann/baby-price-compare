@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.0.3">
+<meta name="app-version" content="6.0.4">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -36,7 +36,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.0.3</div>
+    <div class="small" id="appVersion">アプリ v6.0.4</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -61,9 +61,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 </div>
 
-<script src="config.js?v=6.0.3"></script>
+<script src="config.js?v=6.0.4"></script>
 <script>
-const APP_VERSION="6.0.3";
+const APP_VERSION="6.0.4";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -91,6 +91,7 @@ function render(){
      (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
        '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+' −'+yen(best.benefit_discount)+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
        '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
+       ((p.color_options||[]).length?('<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">カラー一覧を見る</summary><div class="chips" style="margin-top:8px">'+(p.color_options||[]).map(v=>'<span class="chip'+(v.status==="ended"?' warn':'')+'">'+esc(v.name)+(v.note?'（'+esc(v.note)+'）':'')+'</span>').join("")+'</div></details>'):'')+
        (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">この販売先を開く</a>':'')
      :'<div class="empty">まだ価格データがありません。</div>')+
    '</section>'
