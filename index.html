@@ -77,7 +77,7 @@ function render(){
  $("products").innerHTML=list.map(p=>{
    const offers=[...p.offers].sort((a,b)=>(effective(a)??Infinity)-(effective(b)??Infinity));
    const best=offers[0];
-   const hist=p.history_low;
+   const hist=mode==="cash"?p.history_low_cash:mode==="all"?p.history_low_all:p.history_low_normal;
    return '<section class="product">'+
      '<h2>'+esc(p.name)+'</h2><div class="jan">JAN '+esc(p.jan)+'</div>'+
      (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
@@ -105,7 +105,7 @@ async function loadLatest(){
    const data=await api("latest");
    state={products:data.products||fallback()};
    $("statusTitle").textContent="自動監視中";$("statusTitle").className="ok";
-   $("statusText").textContent=data.schedule_label||"定期チェック設定済み";
+   const ps=data.providers_configured||{}; const providers=[ps.yahoo?"Yahoo!○":"Yahoo!未設定",ps.rakuten?"楽天○":"楽天未設定"].join(" / "); $("statusText").textContent=(data.schedule_label||"定期チェック設定済み")+" ・ "+providers;
  }catch(e){
    state={products:fallback()};
    $("statusTitle").textContent=cfg.apiBase?"接続エラー":"バックエンド未接続";
