@@ -4,224 +4,125 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ベビー最安比較">
+<meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="4.0">
-<title>ベビー大物 最安比較</title>
+<meta name="app-version" content="6.0-dev">
+<title>ベビー価格ウォッチ</title>
 <style>
-:root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da;--bad:#a33e37;--badbg:#fae9e7}
+:root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:11px;padding:10px 13px}.wrap{max-width:1120px;margin:auto;padding:14px 12px 28px}
-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin:4px 0 14px}h1{font-size:25px;margin:0 0 4px}.sub,.small{font-size:12px;color:var(--muted);line-height:1.5}
-.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:14px}.notice{background:var(--soft);padding:10px 12px;border-radius:12px;font-size:12px;color:var(--muted);margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.span2{grid-column:span 2}label{display:block;font-size:11px;color:var(--muted);font-weight:650;margin-bottom:4px}
-input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:white;min-height:42px}textarea{min-height:74px;resize:vertical}
-.actions,.toolbar,.rowactions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.actions{margin-top:12px}.primary{background:var(--accent);color:white}.secondary{background:var(--soft);color:var(--text)}.danger{background:var(--badbg);color:var(--bad)}.ghost{background:white;border:1px solid var(--line)}.star{background:#fff2c5;color:#7b5b00}
-.preview{border:1px dashed var(--line);background:#fbf8f4;border-radius:12px;padding:10px;line-height:1.5}.preview strong{font-size:20px}.modebox{background:#fbf8f4;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}.mode-switch{display:flex;gap:7px;flex-wrap:wrap}.modebtn.active{background:var(--accent);color:white}.normalpt{background:#eaf1fb!important;color:#315f93}.limitedpt{background:#f0eafb!important;color:#68449a}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:10px}.metric .v{font-size:19px;font-weight:800}
-.toolbar input{max-width:250px}.toolbar select{width:auto}.viewbtn.active{background:var(--accent);color:white}
-.group{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:12px}.ghead{background:#fbf8f4;border-bottom:1px solid var(--line);padding:11px 12px;display:flex;justify-content:space-between;gap:10px}.title{font-weight:800}
-.offer{padding:11px 12px;border-bottom:1px solid #eee8df;display:grid;grid-template-columns:1.25fr 100px 115px 115px 1.35fr auto;gap:9px;align-items:center}.offer:last-child{border-bottom:0}.store{font-weight:750}.price{font-weight:800;white-space:nowrap}.eff{font-size:17px;font-weight:850;white-space:nowrap}.good{color:var(--good)}
-.badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.badge{font-size:10px;padding:3px 7px;border-radius:999px;background:var(--soft)}.best{background:var(--goodbg);color:var(--good);font-weight:800}.fav{background:#fff2c5;color:#765800}.warn{background:var(--warnbg);color:var(--warn)}.bad{background:var(--badbg);color:var(--bad)}
-.empty{text-align:center;padding:30px;color:var(--muted)}.hidden{display:none!important}
-.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:920px;font-size:13px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font-size:11px;color:var(--muted)}
-.modalback{position:fixed;inset:0;background:#0005;display:flex;align-items:flex-end;justify-content:center;padding:12px;z-index:10}.modal{width:min(620px,100%);max-height:86vh;overflow:auto;background:white;border-radius:18px;padding:16px}
-@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.offer{grid-template-columns:1.2fr .8fr .9fr .9fr}.notes{grid-column:1/4}.rowactions{grid-column:4;grid-row:1/3}.metrics{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){header{display:block}.grid{grid-template-columns:1fr}.span2{grid-column:span 1}.toolbar>*{flex:1 1 auto}.toolbar input,.toolbar select{max-width:none;width:100%}.offer{grid-template-columns:1fr 1fr}.notes,.rowactions{grid-column:1/3}.rowactions{grid-row:auto}.ghead{align-items:flex-start}}
-
-.versionline{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:6px}
-.versionbadge{display:inline-block;font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;background:var(--soft);color:var(--muted)}
-.update-banner{background:#eaf5ee;border:1px solid #c9e5d2;border-radius:14px;padding:11px 12px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.update-banner strong{color:var(--good)}
-.update-status{font-size:11px;color:var(--muted)}
-.spin{display:inline-block;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:560px){.update-banner{align-items:flex-start;flex-direction:column}.update-banner button{width:100%}}
+button{font:inherit;border:0;border-radius:12px;padding:11px 14px;cursor:pointer}.wrap{max-width:980px;margin:auto;padding:16px 12px 34px}
+header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}h1{font-size:25px;margin:0 0 4px}.sub,.small{font-size:12px;color:var(--muted);line-height:1.5}
+.primary{background:var(--accent);color:#fff}.secondary{background:var(--soft);color:var(--text)}.ghost{background:white;border:1px solid var(--line)}
+.status{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.ok{color:var(--good)}.warn{color:var(--warn)}
+.mode{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.switch{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.switch button.active{background:var(--accent);color:white}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
+.price{font-size:27px;font-weight:850;letter-spacing:-.03em}.label{font-size:11px;color:var(--muted)}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-end}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;padding:4px 7px;border-radius:999px;background:var(--soft)}.best{background:var(--goodbg);color:var(--good);font-weight:800}.history{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}.shop{font-weight:750}.link{display:inline-block;margin-top:10px;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.empty{padding:28px 8px;text-align:center;color:var(--muted)}.footer{margin-top:18px;font-size:11px;color:var(--muted);line-height:1.55}
+@media(max-width:700px){header{display:block}header .actions{margin-top:9px}.grid{grid-template-columns:1fr}.switch button{flex:1}.status{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-<div><h1>ベビー大物 最安比較</h1><div class="sub">価格・クーポン・ポイントをまとめて「本当に安い」を比較するま。</div></div>
-<div class="actions" style="margin-top:0"><button class="ghost" id="refreshAppBtn">最新版を再読込</button><button class="ghost" id="backupBtn">バックアップ</button><button class="ghost" id="csvBtn">CSV</button></div>
+  <div>
+    <h1>ベビー価格ウォッチ</h1>
+    <div class="sub">4商品を固定監視。取得できた販売先から、その時点の最安を自動比較します。</div>
+  </div>
+  <div class="actions"><button class="primary" id="refreshBtn">今すぐ価格チェック</button></div>
 </header>
 
-<div class="notice">旧版と同じ <b>babyBigItemCompare</b> を使うので既存記録を引き継ぎます。旧版の「ポイント」は安全側で <b>通常ポイント</b> として移行します。</div>
-
-<div class="modebox">
-<b>実質最安の計算方法</b>
-<div class="mode-switch" style="margin-top:8px">
-<button class="modebtn primary active" data-mode="normal">通常ポイントだけ考慮</button>
-<button class="modebtn secondary" data-mode="all">全ポイントを考慮</button>
-</div>
-<div class="small" id="modeHelp" style="margin-top:7px">用途・期間限定ポイントは実質価格から差し引きません。</div>
+<div class="status">
+  <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
+  <div class="small" id="lastChecked">最終確認：—</div>
 </div>
 
-<div class="card" id="formCard">
-<div class="grid">
-<div class="span2"><label>商品</label><select id="product"><option>クルムーヴ コンパクト JS（黒）</option><option>クルムーヴ コンパクト JS（茶）</option><option>ラクーナ エアー プラス（青）</option></select></div>
-<div><label>カテゴリ</label><input id="category" readonly></div>
-<div><label>販売店</label><input id="store" list="storeList" placeholder="例：Amazon"><datalist id="storeList"></datalist></div>
-
-<div><label>販売価格（税込）</label><input id="price" type="number" min="0" inputmode="numeric" placeholder="53800"></div>
-<div><label>クーポン</label><select id="couponType"><option value="none">なし</option><option value="fixed">○円引き</option><option value="percent">○％引き</option></select></div>
-<div><label>クーポン値</label><input id="couponValue" type="number" min="0" step=".1" placeholder="5000 / 10"></div>
-<div><label>その他値引き</label><input id="otherDiscount" type="number" min="0" value="0"></div>
-
-<div><label>通常ポイント還元率（％）</label><input id="normalPointRate" type="number" min="0" step=".1" placeholder="例：1"></div>
-<div><label>通常ポイント固定</label><input id="normalFixedPoints" type="number" min="0" placeholder="例：500"></div>
-<div><label>限定ポイント還元率（％）</label><input id="limitedPointRate" type="number" min="0" step=".1" placeholder="例：9"></div>
-<div><label>限定ポイント固定</label><input id="limitedFixedPoints" type="number" min="0" placeholder="例：2000"></div>
-<div><label>送料</label><input id="shipping" type="number" min="0" value="0"></div>
-
-<div><label>確認日</label><input id="checkedAt" type="date"></div>
-<div><label>セール・クーポン期限</label><input id="expiresAt" type="date"></div>
-<div><label>候補</label><select id="favorite"><option value="0">通常</option><option value="1">★ 購入候補</option></select></div>
-<div><label>URL</label><input id="url" placeholder="https://..."></div>
-
-<div class="span2"><label>条件・メモ</label><textarea id="notes" placeholder="例：らくらくベビー10%OFF／ブラウン／9/15まで"></textarea></div>
-<div class="span2"><label>実質価格</label><div class="preview" id="preview"></div></div>
-</div>
-<div class="actions"><button class="primary" id="saveBtn">候補に追加</button><button class="secondary hidden" id="cancelBtn">編集をやめる</button><button class="secondary" id="clearBtn">クリア</button></div>
+<div class="mode">
+  <b>実質最安の見方</b>
+  <div class="switch">
+    <button class="modeBtn secondary" data-mode="cash">現金支払額</button>
+    <button class="modeBtn secondary active" data-mode="normal">通常ポイント込み</button>
+    <button class="modeBtn secondary" data-mode="all">取得できた全ポイント込み</button>
+  </div>
+  <div class="small" id="modeHelp" style="margin-top:7px">通常ポイントだけを1pt=1円として差し引きます。</div>
 </div>
 
-<div class="metrics">
-<div class="metric"><div class="small">登録商品</div><div class="v" id="mProducts">0</div></div>
-<div class="metric"><div class="small">比較候補</div><div class="v" id="mOffers">0</div></div>
-<div class="metric"><div class="small">★ 購入候補</div><div class="v" id="mFavs">0</div></div>
-<div class="metric"><div class="small">最終確認日</div><div class="v" id="mLatest" style="font-size:15px">—</div></div>
-</div>
-
-<div class="card">
-<div class="toolbar">
-<input id="search" placeholder="商品名・店名・メモで検索">
-<select id="productFilter"><option value="">全商品</option></select>
-<select id="favFilter"><option value="">すべて</option><option value="fav">★だけ</option></select>
-<select id="sort"><option value="effective">実質価格が安い順</option><option value="price">販売価格が安い順</option><option value="date">確認日が新しい順</option><option value="product">商品名順</option></select>
-<button class="viewbtn secondary active" data-view="cards">商品別</button><button class="viewbtn secondary" data-view="table">一覧</button>
-</div>
-<div id="cards"></div>
-<div id="table" class="hidden tablewrap"><table><thead><tr><th>商品</th><th>店</th><th>価格</th><th>値引き</th><th>通常pt</th><th>限定pt</th><th>実質</th><th>確認日</th><th>メモ</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
-<div id="empty" class="empty">まだ比較候補がありません。</div>
+<div id="products" class="grid"></div>
+<div class="footer">
+  ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
+  ※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。
 </div>
 </div>
 
-<div id="modal" class="modalback hidden"><div class="modal">
-<h2 style="margin-top:0">バックアップ・復元</h2>
-<p class="small">JSONは通常／限定ポイントの内訳まで完全保存。GitHub更新前・機種変更前の保険におすすめま。</p>
-<div class="actions"><button class="primary" id="exportJson">JSONを保存</button><label class="secondary" style="padding:10px 13px;border-radius:11px;cursor:pointer">JSONから復元<input id="importJson" type="file" accept=".json,application/json" hidden></label></div>
-<div class="actions"><button class="danger" id="deleteAll">全データ削除</button><button class="secondary" id="closeModal">閉じる</button></div>
-</div></div>
-
+<script src="config.js"></script>
 <script>
-const APP_VERSION="4.0", KEY="babyBigItemCompare",$=x=>document.getElementById(x);
-const PRODUCTS=["クルムーヴ コンパクト JS（黒）","クルムーヴ コンパクト JS（茶）","ラクーナ エアー プラス（青）"];
-let rows=[],editing=null,view="cards",pointMode=localStorage.getItem("babyPointMode")||"normal";
-const num=v=>Number(v||0),yen=v=>Math.round(num(v)).toLocaleString("ja-JP")+"円",today=()=>new Date().toISOString().slice(0,10);
-const id=()=>window.crypto&&crypto.randomUUID?crypto.randomUUID():"id-"+Date.now()+"-"+Math.random().toString(16).slice(2);
+const PRODUCTS=[
+ {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
+ {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
+ {id:"luxuna-air-plus-blue",name:"ラクーナ エアー プラス（青）",jan:"4969220010212",category:"ベビーカー"},
+ {id:"laclis-ab-black",name:"ラクリス AB（黒）",jan:"4969220010663",category:"抱っこ紐"}
+];
+const cfg=window.PRICE_WATCH_CONFIG||{};
+let mode=localStorage.getItem("priceWatchMode")||"normal";
+let state={products:[]};
+const $=x=>document.getElementById(x);
+const yen=n=>Number.isFinite(Number(n))?Math.round(Number(n)).toLocaleString("ja-JP")+"円":"—";
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-function safeUrl(s){try{let u=new URL(s);return /^https?:$/.test(u.protocol)?u.href:""}catch{return""}}
-function categoryFor(p){return String(p).startsWith("クルムーヴ")?"チャイルドシート":String(p).startsWith("ラクーナ")?"ベビーカー":"その他"}
-function normalizeProduct(p){const s=String(p||"");if(PRODUCTS.includes(s))return s;if(s.includes("クルムーヴ")&&(s.includes("黒")||s.toLowerCase().includes("black")))return PRODUCTS[0];if(s.includes("クルムーヴ")&&(s.includes("茶")||s.includes("ブラウン")||s.toLowerCase().includes("brown")))return PRODUCTS[1];if(s.includes("ラクーナ")&&s.includes("エアー")&&s.includes("プラス"))return PRODUCTS[2];return s||PRODUCTS[0]}
-function recalc(r){let p=num(r.price),c=0;if(r.couponType==="fixed")c=num(r.couponValue);else if(r.couponType==="percent")c=p*num(r.couponValue)/100;else c=num(r.coupon)||0;c=Math.min(Math.max(c,0),p);let after=Math.max(0,p-c-num(r.otherDiscount));let normal=after*num(r.normalPointRate)/100+num(r.normalFixedPoints);let limited=after*num(r.limitedPointRate)/100+num(r.limitedFixedPoints);let base=after+num(r.shipping);return {...r,coupon:c,normalPoints:normal,limitedPoints:limited,effectiveNormal:base-normal,effectiveAll:base-normal-limited}}
-function migrate(r){const split=("normalPointRate" in r)||("limitedPointRate" in r)||("normalFixedPoints" in r)||("limitedFixedPoints" in r);let out={...r,id:r.id||id(),product:normalizeProduct(r.product),store:r.store||"販売店未設定",price:num(r.price),couponType:r.couponType||"none",couponValue:num(r.couponValue),otherDiscount:num(r.otherDiscount),shipping:num(r.shipping),checkedAt:r.checkedAt||"",expiresAt:r.expiresAt||"",favorite:!!r.favorite,url:r.url||"",notes:r.notes||""};out.category=categoryFor(out.product);out.normalPointRate=split?num(r.normalPointRate):num(r.pointRate);out.normalFixedPoints=split?num(r.normalFixedPoints):num(r.fixedPoints);out.limitedPointRate=split?num(r.limitedPointRate):0;out.limitedFixedPoints=split?num(r.limitedFixedPoints):0;return recalc(out)}
-function currentEffective(r){return pointMode==="all"?r.effectiveAll:r.effectiveNormal}
-function load(){try{let x=JSON.parse(localStorage.getItem(KEY)||"[]");rows=Array.isArray(x)?x.map(migrate):[]}catch{rows=[]}save(false)}
-function save(draw=true){localStorage.setItem(KEY,JSON.stringify(rows));if(draw)render()}
-function syncCategory(){$("category").value=categoryFor($("product").value)}
-function form(){return recalc({id:editing||id(),product:$("product").value,category:categoryFor($("product").value),store:$("store").value.trim(),price:num($("price").value),couponType:$("couponType").value,couponValue:num($("couponValue").value),otherDiscount:num($("otherDiscount").value),normalPointRate:num($("normalPointRate").value),normalFixedPoints:num($("normalFixedPoints").value),limitedPointRate:num($("limitedPointRate").value),limitedFixedPoints:num($("limitedFixedPoints").value),shipping:num($("shipping").value),checkedAt:$("checkedAt").value,expiresAt:$("expiresAt").value,favorite:$("favorite").value==="1",url:$("url").value.trim(),notes:$("notes").value.trim()})}
-function preview(){let r=form();$("preview").innerHTML=`${yen(r.price)} − 値引き ${yen(r.coupon+r.otherDiscount)} ＋ 送料 ${yen(r.shipping)}<br><span class="badge normalpt">通常 ${Math.round(r.normalPoints).toLocaleString()}pt</span> <span class="badge limitedpt">限定 ${Math.round(r.limitedPoints).toLocaleString()}pt</span><br>通常ptのみ：<b>${yen(r.effectiveNormal)}</b><br>全pt考慮：<b>${yen(r.effectiveAll)}</b><br><strong>現在の比較値：${yen(currentEffective(r))}</strong>`}
-function clearForm(keep=true){let p=keep?$("product").value:PRODUCTS[0];$("product").value=p||PRODUCTS[0];["store","price","couponValue","normalPointRate","normalFixedPoints","limitedPointRate","limitedFixedPoints","expiresAt","url","notes"].forEach(x=>$(x).value="");$("otherDiscount").value=0;$("shipping").value=0;$("couponType").value="none";$("favorite").value="0";$("checkedAt").value=today();editing=null;$("saveBtn").textContent="候補に追加";$("cancelBtn").classList.add("hidden");syncCategory();preview()}
-function submit(){let r=form();if(!r.store||!r.price){alert("販売店・販売価格を入力してください。");return}if(editing){let i=rows.findIndex(x=>x.id===editing);if(i>=0)rows[i]=r}else rows.push(r);save();clearForm(true)}
-function editRow(x){let r=rows.find(z=>z.id===x);if(!r)return;$("product").value=PRODUCTS.includes(r.product)?r.product:PRODUCTS[0];["store","price","couponType","couponValue","otherDiscount","normalPointRate","normalFixedPoints","limitedPointRate","limitedFixedPoints","shipping","checkedAt","expiresAt","url","notes"].forEach(k=>$(k).value=r[k]??"");$("favorite").value=r.favorite?"1":"0";editing=r.id;$("saveBtn").textContent="変更を保存";$("cancelBtn").classList.remove("hidden");syncCategory();preview();$("formCard").scrollIntoView({behavior:"smooth"})}
-function duplicateRow(x){let r=rows.find(z=>z.id===x);if(!r)return;editRow(x);editing=null;$("store").value="";$("url").value="";$("checkedAt").value=today();$("favorite").value="0";$("saveBtn").textContent="複製して追加"}
-function toggleFav(x){let r=rows.find(z=>z.id===x);if(r){r.favorite=!r.favorite;save()}}
-function removeRow(x){if(confirm("この候補を削除しますか？")){rows=rows.filter(z=>z.id!==x);save()}}
-window.editRow=editRow;window.duplicateRow=duplicateRow;window.toggleFav=toggleFav;window.removeRow=removeRow;
-function daysAgo(s){if(!s)return null;return Math.floor((new Date(today())-new Date(s))/86400000)}function daysUntil(s){if(!s)return null;return Math.floor((new Date(s)-new Date(today()))/86400000)}
-function badges(r,b){let a=[];if(b)a.push('<span class="badge best">最安</span>');if(r.favorite)a.push('<span class="badge fav">★ 購入候補</span>');let d=daysAgo(r.checkedAt);if(d>=14)a.push(`<span class="badge warn">${d}日前の価格</span>`);let u=daysUntil(r.expiresAt);if(u!=null){if(u<0)a.push('<span class="badge bad">期限切れ</span>');else if(u<=3)a.push(`<span class="badge warn">あと${u}日</span>`)}return a.join("")}
-function filtered(){let q=$("search").value.toLowerCase().trim(),p=$("productFilter").value,f=$("favFilter").value,l=rows.filter(r=>(!q||(r.store+" "+r.notes).toLowerCase().includes(q))&&(!p||r.product===p)&&(!f||r.favorite)),s=$("sort").value;l.sort((a,b)=>s==="effective"?currentEffective(a)-currentEffective(b):s==="price"?a.price-b.price:s==="date"?(b.checkedAt||"").localeCompare(a.checkedAt||""):a.product.localeCompare(b.product,"ja"));return l}
-function offer(r,b){let u=safeUrl(r.url);return `<div class="offer"><div><div class="store">${u?`<a href="${esc(u)}" target="_blank"><u>${esc(r.store)}</u></a>`:esc(r.store)}</div><div class="badges">${badges(r,b)}</div></div><div><div class="small">販売価格</div><div class="price">${yen(r.price)}</div>${r.coupon+r.otherDiscount?`<div class="small">−${yen(r.coupon+r.otherDiscount)}</div>`:""}</div><div><span class="badge normalpt">通常 ${Math.round(r.normalPoints).toLocaleString()}pt</span><br><span class="badge limitedpt">限定 ${Math.round(r.limitedPoints).toLocaleString()}pt</span></div><div><div class="small">実質</div><div class="eff ${b?"good":""}">${yen(currentEffective(r))}</div><div class="small">${pointMode==="normal"?"通常ptのみ":"全pt考慮"}</div></div><div class="notes">${esc(r.notes)}<div class="small">${r.checkedAt?"確認 "+r.checkedAt:""}${r.expiresAt?" ・期限 "+r.expiresAt:""}</div></div><div class="rowactions"><button class="${r.favorite?"star":"secondary"}" onclick="toggleFav('${r.id}')">${r.favorite?"★":"☆"}</button><button class="secondary" onclick="editRow('${r.id}')">編集</button><button class="secondary" onclick="duplicateRow('${r.id}')">複製</button><button class="danger" onclick="removeRow('${r.id}')">削除</button></div></div>`}
-function render(){rows=rows.map(migrate);let l=filtered(),g={};l.forEach(r=>(g[r.product]??=[]).push(r));$("cards").innerHTML=Object.keys(g).sort((a,b)=>Math.min(...g[a].map(currentEffective))-Math.min(...g[b].map(currentEffective))).map(p=>{let x=g[p],best=Math.min(...x.map(currentEffective)),worst=Math.max(...x.map(currentEffective));return `<section class="group"><div class="ghead"><div><div class="title">${esc(p)}</div><div class="small">${esc(categoryFor(p))} ・ ${x.length}件比較</div></div><div style="text-align:right"><div class="small">最安実質</div><div class="price good">${yen(best)}</div>${worst>best?`<div class="small">最高との差 ${yen(worst-best)}</div>`:""}</div></div>${x.map(r=>offer(r,Math.abs(currentEffective(r)-best)<.5)).join("")}</section>`}).join("");let best={};rows.forEach(r=>best[r.product]=best[r.product]==null?currentEffective(r):Math.min(best[r.product],currentEffective(r)));$("tbody").innerHTML=l.map(r=>`<tr><td><b>${esc(r.product)}</b><div class="badges">${badges(r,Math.abs(currentEffective(r)-best[r.product])<.5)}</div></td><td>${esc(r.store)}</td><td>${yen(r.price)}</td><td>${r.coupon+r.otherDiscount?yen(r.coupon+r.otherDiscount):"—"}</td><td>${Math.round(r.normalPoints).toLocaleString()}pt</td><td>${Math.round(r.limitedPoints).toLocaleString()}pt</td><td class="eff">${yen(currentEffective(r))}</td><td>${r.checkedAt||"—"}</td><td>${esc(r.notes||"—")}</td><td><button class="secondary" onclick="editRow('${r.id}')">編集</button></td></tr>`).join("");$("empty").style.display=l.length?"none":"block";$("cards").classList.toggle("hidden",view!=="cards");$("table").classList.toggle("hidden",view!=="table");$("mProducts").textContent=new Set(rows.map(r=>r.product)).size;$("mOffers").textContent=rows.length;$("mFavs").textContent=rows.filter(r=>r.favorite).length;$("mLatest").textContent=rows.map(r=>r.checkedAt).filter(Boolean).sort().reverse()[0]||"—";$("storeList").innerHTML=[...new Set(rows.map(r=>r.store))].sort().map(x=>`<option value="${esc(x)}">`).join("");let cur=$("productFilter").value;$("productFilter").innerHTML='<option value="">全商品</option>'+PRODUCTS.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");$("productFilter").value=cur;document.querySelectorAll(".modebtn").forEach(b=>b.classList.toggle("active",b.dataset.mode===pointMode));$("modeHelp").textContent=pointMode==="normal"?"用途・期間限定ポイントは実質価格から差し引きません。":"通常ポイント＋用途・期間限定ポイントをすべて1pt＝1円として差し引きます。"}
-function setMode(m){pointMode=m;localStorage.setItem("babyPointMode",m);document.querySelectorAll(".modebtn").forEach(b=>{b.classList.toggle("active",b.dataset.mode===m);b.classList.toggle("primary",b.dataset.mode===m);b.classList.toggle("secondary",b.dataset.mode!==m)});preview();render()}
-function dl(name,text,type){let b=new Blob([text],{type}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
-function jsonOut(){dl("baby-price-backup-"+today()+".json",JSON.stringify({version:3,pointMode,rows},null,2),"application/json")}
-function csvOut(){let h=["商品","カテゴリ","販売店","販売価格","クーポン","その他値引き","送料","通常pt率","通常固定pt","限定pt率","限定固定pt","通常pt","限定pt","実質_通常ptのみ","実質_全pt","★","確認日","期限","URL","メモ"],d=rows.map(r=>[r.product,r.category,r.store,r.price,r.coupon,r.otherDiscount,r.shipping,r.normalPointRate,r.normalFixedPoints,r.limitedPointRate,r.limitedFixedPoints,r.normalPoints,r.limitedPoints,r.effectiveNormal,r.effectiveAll,r.favorite?"★":"",r.checkedAt,r.expiresAt,r.url,r.notes]),csv=[h,...d].map(a=>a.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");dl("baby-price-"+today()+".csv","\uFEFF"+csv,"text/csv;charset=utf-8")}
-function importJson(file){let fr=new FileReader();fr.onload=()=>{try{let o=JSON.parse(fr.result),a=Array.isArray(o)?o:o.rows;if(!Array.isArray(a))throw 0;if(confirm(`現在のデータをバックアップの${a.length}件で置き換えますか？`)){rows=a.map(migrate);if(o.pointMode)pointMode=o.pointMode;save();setMode(pointMode);$("modal").classList.add("hidden")}}catch{alert("読み込めないJSONです。")}};fr.readAsText(file)}
-
-function latestUrl(){
-  if(location.protocol!=="http:"&&location.protocol!=="https:") return null;
-  const u=new URL(location.href);
-  u.search="";
-  u.hash="";
-  u.searchParams.set("_appcheck",Date.now().toString());
-  return u.toString();
+function effective(o){if(!o)return null;if(mode==="cash")return Number(o.cash_total);if(mode==="all")return Number(o.effective_all);return Number(o.effective_normal)}
+function setMode(m){mode=m;localStorage.setItem("priceWatchMode",m);document.querySelectorAll(".modeBtn").forEach(b=>b.classList.toggle("active",b.dataset.mode===m));$("modeHelp").textContent=m==="cash"?"ポイントを考慮せず、商品価格＋送料で比較します。":m==="all"?"APIで取得できた通常＋限定ポイントを差し引いて比較します。":"通常ポイントだけを1pt=1円として差し引きます。";render()}
+function fallback(){return PRODUCTS.map(p=>({...p,offers:[],current:null,history_low:null,last_checked_at:null}))}
+function render(){
+ const map=new Map((state.products||[]).map(p=>[p.id,p]));
+ const list=PRODUCTS.map(base=>({...base,...(map.get(base.id)||{}),offers:(map.get(base.id)?.offers||[])}));
+ $("products").innerHTML=list.map(p=>{
+   const offers=[...p.offers].sort((a,b)=>(effective(a)??Infinity)-(effective(b)??Infinity));
+   const best=offers[0];
+   const hist=mode==="cash"?p.history_low_cash:mode==="all"?p.history_low_all:p.history_low_normal;
+   return '<section class="product">'+
+     '<h2>'+esc(p.name)+'</h2><div class="jan">JAN '+esc(p.jan)+'</div>'+
+     (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
+       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span><span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span></div>'+
+       '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
+       (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">この販売先を開く</a>':'')
+     :'<div class="empty">まだ価格データがありません。</div>')+
+   '</section>'
+ }).join("");
+ const dates=list.map(x=>x.last_checked_at).filter(Boolean).sort();
+ $("lastChecked").textContent="最終確認："+(dates.length?new Date(dates[dates.length-1]).toLocaleString("ja-JP"):"—");
 }
-function extractVersion(text){
-  const m=text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i)
-        || text.match(/<meta\s+content=["']([^"']+)["']\s+name=["']app-version["']/i);
-  return m?m[1]:null;
+async function api(path,opts={}){
+ if(!cfg.apiBase)throw new Error("backend-not-configured");
+ const url=cfg.apiBase.replace(/\/$/,"")+"/"+path.replace(/^\//,"");
+ const headers={"Content-Type":"application/json",...(opts.headers||{})};
+ if(cfg.refreshToken)headers["X-Price-Watch-Token"]=cfg.refreshToken;
+ const res=await fetch(url,{...opts,headers,cache:"no-store"});
+ if(!res.ok)throw new Error("HTTP "+res.status);
+ return await res.json();
 }
-async function fetchLatestHtml(){
-  const u=latestUrl();
-  if(!u) throw new Error("not-web");
-  const res=await fetch(u,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
-  if(!res.ok) throw new Error("HTTP "+res.status);
-  return await res.text();
+async function loadLatest(){
+ try{
+   $("statusTitle").textContent="価格データを読み込み中…";$("statusText").textContent="";
+   const data=await api("latest");
+   state={products:data.products||fallback()};
+   $("statusTitle").textContent="自動監視中";$("statusTitle").className="ok";
+   const ps=data.providers_configured||{}; const providers=[ps.yahoo?"Yahoo!○":"Yahoo!未設定",ps.rakuten?"楽天○":"楽天未設定"].join(" / "); $("statusText").textContent=(data.schedule_label||"定期チェック設定済み")+" ・ "+providers;
+ }catch(e){
+   state={products:fallback()};
+   $("statusTitle").textContent=cfg.apiBase?"接続エラー":"バックエンド未接続";
+   $("statusTitle").className="warn";
+   $("statusText").textContent=cfg.apiBase?"Supabase APIに接続できませんでした。":"Supabase設定後、自動監視が有効になります。";
+ }
+ render();
 }
-function applyHtml(text){
-  // localStorage is not cleared: only the app document itself is replaced.
-  document.open();
-  document.write(text);
-  document.close();
+async function refreshNow(){
+ const b=$("refreshBtn"),old=b.textContent;b.disabled=true;b.textContent="チェック中…";
+ try{await api("refresh",{method:"POST",body:"{}"});await loadLatest()}
+ catch(e){alert(e.message==="backend-not-configured"?"Supabaseバックエンドがまだ未設定です。":"価格チェックに失敗しました。")}
+ finally{b.disabled=false;b.textContent=old}
 }
-async function checkForUpdate(autoApply=true){
-  const status=$("updateStatus");
-  try{
-    status.innerHTML='<span class="spin">↻</span> 最新版を確認中…';
-    const text=await fetchLatestHtml();
-    const latest=extractVersion(text);
-    if(!latest){
-      status.textContent="最新版の確認情報を取得できませんでした";
-      return;
-    }
-    if(latest!==APP_VERSION){
-      $("updateBanner").classList.remove("hidden");
-      $("updateMessage").textContent=`v${APP_VERSION} → v${latest} に更新できます。比較データはそのまま残ります。`;
-      status.textContent=`新しい v${latest} があります`;
-      window.__latestAppHtml=text;
-      if(autoApply){
-        // A cached Home Screen Web App can update itself immediately.
-        applyHtml(text);
-      }
-    }else{
-      $("updateBanner").classList.add("hidden");
-      status.textContent=`v${APP_VERSION}・最新版`;
-    }
-  }catch(e){
-    status.textContent=location.protocol==="file:"?"公開後のWebアプリで最新版チェックが動きます":"最新版チェックに失敗しました";
-  }
-}
-async function forceRefreshApp(){
-  const btn=$("refreshAppBtn"), status=$("updateStatus");
-  const old=btn.textContent;
-  btn.disabled=true;btn.textContent="確認中…";
-  try{
-    const text=await fetchLatestHtml();
-    const latest=extractVersion(text);
-    status.textContent=latest?`v${latest} を再読込します`:"最新版を再読込します";
-    applyHtml(text);
-  }catch(e){
-    status.textContent="再読込に失敗しました。通信状態を確認してください";
-    btn.disabled=false;btn.textContent=old;
-  }
-}
-
-$("product").addEventListener("change",()=>{syncCategory();preview()});document.querySelectorAll("#formCard input,#formCard select,#formCard textarea").forEach(e=>e.addEventListener("input",preview));$("saveBtn").onclick=submit;$("clearBtn").onclick=()=>clearForm(true);$("cancelBtn").onclick=()=>clearForm(true);["search","productFilter","favFilter","sort"].forEach(x=>$(x).addEventListener(x==="search"?"input":"change",render));document.querySelectorAll(".viewbtn").forEach(b=>b.onclick=()=>{view=b.dataset.view;document.querySelectorAll(".viewbtn").forEach(x=>x.classList.toggle("active",x===b));render()});document.querySelectorAll(".modebtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));$("backupBtn").onclick=()=>$("modal").classList.remove("hidden");$("closeModal").onclick=()=>$("modal").classList.add("hidden");$("exportJson").onclick=jsonOut;$("csvBtn").onclick=csvOut;$("importJson").onchange=e=>{if(e.target.files[0])importJson(e.target.files[0])};$("deleteAll").onclick=()=>{if(confirm("全データを削除しますか？")){rows=[];save();$("modal").classList.add("hidden")}};
-$("refreshAppBtn").onclick=forceRefreshApp;
-$("applyUpdateBtn").onclick=async()=>{if(window.__latestAppHtml)applyHtml(window.__latestAppHtml);else forceRefreshApp()};
-load();clearForm(false);setMode(pointMode);render();
-setTimeout(()=>checkForUpdate(true),350);
+document.querySelectorAll(".modeBtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+$("refreshBtn").onclick=refreshNow;
+setMode(mode);loadLatest();
 </script>
 </body>
 </html>
