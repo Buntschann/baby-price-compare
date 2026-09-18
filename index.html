@@ -50,7 +50,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 <div id="products" class="grid"></div>
 <div class="footer">
   ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
-  ※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。
+  ※Amazonは、らくらくベビーの対象商品についてPrime会員の「らくベビ割引10%」が有効という前提で比較します（合計10万円まで・最大1万円OFFの枠内）。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。
 </div>
 </div>
 
@@ -81,7 +81,7 @@ function render(){
    return '<section class="product">'+
      '<h2>'+esc(p.name)+'</h2><div class="jan">JAN '+esc(p.jan)+'</div>'+
      (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
-       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span><span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span></div>'+
+       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+' −'+yen(best.benefit_discount)+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span></div>'+
        '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">この販売先を開く</a>':'')
      :'<div class="empty">まだ価格データがありません。</div>')+
