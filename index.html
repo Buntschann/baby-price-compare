@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.1.0">
+<meta name="app-version" content="6.1.1">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -37,7 +37,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.1.0</div>
+    <div class="small" id="appVersion">アプリ v6.1.1</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -58,13 +58,13 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 <div id="products" class="grid"></div>
 <div class="footer">
   ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
-  ※Amazonは、らくらくベビーの対象商品についてPrime会員の「らくベビ割引10%」が有効という前提で比較します（合計10万円まで・最大1万円OFFの枠内）。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。
+  ※Amazonは、らくらくベビーの対象商品についてPrime会員の「らくベビ割引10%」が有効という前提で比較します（合計10万円まで・最大1万円OFFの枠内）。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
 </div>
 </div>
 
-<script src="config.js?v=6.1.0"></script>
+<script src="config.js?v=6.1.1"></script>
 <script>
-const APP_VERSION="6.1.0";
+const APP_VERSION="6.1.1";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
