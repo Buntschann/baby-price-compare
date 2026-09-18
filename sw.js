@@ -1,4 +1,4 @@
-const CACHE_NAME="baby-price-watch-shell-v6.0.1";
+const CACHE_NAME="baby-price-watch-shell-v6.1.0";
 
 self.addEventListener("install",event=>{
   self.skipWaiting();
