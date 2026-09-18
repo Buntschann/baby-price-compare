@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.4.1">
+<meta name="app-version" content="6.4.2">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -37,7 +37,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.4.1</div>
+    <div class="small" id="appVersion">アプリ v6.4.2</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -77,9 +77,15 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.4.1</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.4.2</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.4.1</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.4.2</b><span>最新</span></div><ul>
+      <li>更新確認をGitHub mainブランチ直接確認方式に変更</li>
+      <li>Pages公開反映待ちでも新バージョンを即検知</li>
+      <li>公開反映待ちは自動再確認し、反映されたら更新可能に</li>
+      <li>最新版適用時に古いアプリキャッシュを削除して強制再読込</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.4.1</b></div><ul>
       <li>色のチェックを「買う種類」ではなく「選びたい色」に変更</li>
       <li>色を考慮しない3種類の最安合計を表示</li>
       <li>選んだ色で揃えた場合の最安合計を表示</li>
@@ -150,9 +156,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   </div>
 </div>
 
-<script src="config.js?v=6.4.1"></script>
+<script src="config.js?v=6.4.2"></script>
 <script>
-const APP_VERSION="6.4.1";
+const APP_VERSION="6.4.2";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -410,40 +416,107 @@ function extractRemoteVersion(text){
     || text.match(/<meta\s+content=["']([^"']+)["']\s+name=["']app-version["']/i);
   return m?m[1]:null;
 }
+const RAW_INDEX_URL="https://raw.githubusercontent.com/Buntschann/baby-price-compare/main/index.html";
+let pendingUpdateVersion=null;
+let publishPollTimer=null;
+
+async function fetchVersionFrom(url){
+  const u=new URL(url,location.href);
+  u.searchParams.set("_nocache",Date.now().toString());
+  const res=await fetch(u.href,{
+    cache:"no-store",
+    headers:{"Cache-Control":"no-cache, no-store, max-age=0","Pragma":"no-cache"}
+  });
+  if(!res.ok)throw new Error("HTTP "+res.status);
+  return extractRemoteVersion(await res.text());
+}
+async function pagesPublishedVersion(){
+  return await fetchVersionFrom("./index.html");
+}
+async function rawMainVersion(){
+  return await fetchVersionFrom(RAW_INDEX_URL);
+}
+async function waitForPagesVersion(target){
+  clearTimeout(publishPollTimer);
+  try{
+    const published=await pagesPublishedVersion();
+    if(published===target){
+      pendingUpdateVersion=target;
+      $("updateText").textContent="v"+APP_VERSION+" → v"+target+" ・ 公開済み";
+      $("updateBox").style.display="flex";
+      $("updateBtn").disabled=false;
+      $("updateBtn").textContent="最新版に更新";
+      return true;
+    }
+    $("updateText").textContent="v"+target+" を検出 ・ GitHub Pagesへ公開反映待ち…";
+    $("updateBox").style.display="flex";
+    $("updateBtn").disabled=true;
+    $("updateBtn").textContent="公開待ち";
+    publishPollTimer=setTimeout(()=>waitForPagesVersion(target),2000);
+    return false;
+  }catch{
+    publishPollTimer=setTimeout(()=>waitForPagesVersion(target),3000);
+    return false;
+  }
+}
 async function checkAppUpdate(showResult=false){
   const b=$("checkUpdateBtn");
   const old=b?.textContent;
   if(b&&showResult){b.disabled=true;b.textContent="確認中…"}
   try{
-    if("serviceWorker" in navigator){
-      const reg=await navigator.serviceWorker.getRegistration();
-      if(reg)await reg.update();
-    }
-    const u=new URL("./index.html",location.href);
-    u.searchParams.set("_appcheck",Date.now().toString());
-    const res=await fetch(u,{cache:"no-store",headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    const text=await res.text();
-    const latest=extractRemoteVersion(text);
+    // GitHub Pagesの反映遅延に影響されないよう、まずmainブランチを直接確認
+    const latest=await rawMainVersion();
     if(latest && latest!==APP_VERSION){
-      $("updateText").textContent="v"+APP_VERSION+" → v"+latest;
+      pendingUpdateVersion=latest;
+      $("updateText").textContent="v"+APP_VERSION+" → v"+latest+" を検出";
       $("updateBox").style.display="flex";
+      $("updateBtn").disabled=true;
+      $("updateBtn").textContent="公開確認中…";
       if(showResult)$("updateBox").scrollIntoView({behavior:"smooth",block:"center"});
+      await waitForPagesVersion(latest);
       return true;
     }
+    // raw側が同一なら本当に最新版
+    clearTimeout(publishPollTimer);
+    pendingUpdateVersion=null;
     $("updateBox").style.display="none";
     if(showResult)alert("最新版ま！ v"+APP_VERSION);
     return false;
   }catch(e){
-    if(showResult)alert("更新確認に失敗しま。通信を確認してもう一度押してくだまい。");
+    // raw.githubusercontent.com に一時接続できない場合だけPagesへフォールバック
+    try{
+      const latest=await pagesPublishedVersion();
+      if(latest && latest!==APP_VERSION){
+        pendingUpdateVersion=latest;
+        $("updateText").textContent="v"+APP_VERSION+" → v"+latest;
+        $("updateBox").style.display="flex";
+        $("updateBtn").disabled=false;
+        $("updateBtn").textContent="最新版に更新";
+        return true;
+      }
+      if(showResult)alert("最新版ま！ v"+APP_VERSION);
+    }catch{
+      if(showResult)alert("更新確認に失敗しま。通信を確認してもう一度押してくだまい。");
+    }
     return false;
   }finally{
     if(b&&showResult){b.disabled=false;b.textContent=old}
   }
 }
-function forceAppUpdate(){
-  const u=new URL("./",location.href);
-  u.searchParams.set("_v",Date.now().toString());
+async function forceAppUpdate(){
+  clearTimeout(publishPollTimer);
+  try{
+    if("serviceWorker" in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(async reg=>{try{await reg.update()}catch{}}));
+    }
+    if("caches" in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.filter(k=>k.startsWith("baby-price-watch-shell-")).map(k=>caches.delete(k)));
+    }
+  }catch{}
+  const u=new URL("./index.html",location.href);
+  u.searchParams.set("_v",(pendingUpdateVersion||Date.now().toString())+"-"+Date.now());
   location.replace(u.href);
 }
 $("updateBtn").onclick=forceAppUpdate;
