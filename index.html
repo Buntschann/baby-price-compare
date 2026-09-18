@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.1.1">
+<meta name="app-version" content="6.2.0">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -19,7 +19,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
 .price{font-size:27px;font-weight:850;letter-spacing:-.03em}.label{font-size:11px;color:var(--muted)}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-end}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;padding:4px 7px;border-radius:999px;background:var(--soft)}.best{background:var(--goodbg);color:var(--good);font-weight:800}.history{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}.shop{font-weight:750}.link{display:inline-block;margin-top:10px;color:inherit;text-decoration:underline;text-underline-offset:3px}
 .empty{padding:28px 8px;text-align:center;color:var(--muted)}.footer{margin-top:18px;font-size:11px;color:var(--muted);line-height:1.55}
-.offerlist{margin-top:9px;border-top:1px solid var(--line)}.offerrow{padding:9px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.2fr .9fr auto;gap:8px;align-items:center}.offerrow:last-child{border-bottom:0}.offerprice{font-weight:800;text-align:right}.offerlink{font-size:12px;color:inherit;text-decoration:underline}.variantgrid{display:grid;gap:7px;margin-top:9px}.variantrow{display:flex;justify-content:space-between;gap:10px;background:var(--soft);padding:8px 9px;border-radius:10px}.variantrow b{font-size:13px}
+.offerlist{margin-top:9px;border-top:1px solid var(--line)}.offerrow{padding:9px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.2fr .9fr auto;gap:8px;align-items:center}.offerrow:last-child{border-bottom:0}.offerprice{font-weight:800;text-align:right}.offerlink{font-size:12px;color:inherit;text-decoration:underline}.variantgrid{display:grid;gap:7px;margin-top:9px}.variantrow{display:flex;justify-content:space-between;gap:10px;background:var(--soft);padding:8px 9px;border-radius:10px}.variantrow b{font-size:13px}.amazonbox{margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:12px;background:#fffaf4}.amazonhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.amazonrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.amazonrow:first-child{border-top:0}.amazonlink{display:inline-block;padding:7px 10px;border-radius:9px;background:var(--soft);color:inherit;text-decoration:none;font-size:12px;font-weight:700}
 @media(max-width:700px){header{display:block}header .actions{margin-top:9px}.grid{grid-template-columns:1fr}.switch button{flex:1}.status{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -37,7 +37,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.1.1</div>
+    <div class="small" id="appVersion">アプリ v6.2.0</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -58,19 +58,31 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 <div id="products" class="grid"></div>
 <div class="footer">
   ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
-  ※Amazonは、らくらくベビーの対象商品についてPrime会員の「らくベビ割引10%」が有効という前提で比較します（合計10万円まで・最大1万円OFFの枠内）。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
+  ※Amazonは現在API未接続のため、登録済み商品ページへの参考リンクを表示します。Amazon上で対象商品だった場合は「らくベビ割引10%」適用後を目安に比較します。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
 </div>
 </div>
 
-<script src="config.js?v=6.1.1"></script>
+<script src="config.js?v=6.2.0"></script>
 <script>
-const APP_VERSION="6.1.1";
+const APP_VERSION="6.2.0";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
  {id:"luxuna-air-plus-blue",name:"ラクーナ エアー プラス（青）",jan:"4969220010212",category:"ベビーカー"},
  {id:"laclis-ab-black",name:"ラクリス AB",jan:"4969220010663",category:"抱っこ紐"}
 ];
+const AMAZON_REFERENCES={
+ "culmove-js-black":[{label:"ブラック",asin:"B0i3XY99N",url:"https://link.amazon/B0i3XY99N"}],
+ "culmove-js-brown":[{label:"ブラウン",asin:"B082CnKey",url:"https://link.amazon/B082CnKey"}],
+ "luxuna-air-plus-blue":[{label:"ブルー",asin:"B07oWt7Be",url:"https://link.amazon/B07oWt7Be"}],
+ "laclis-ab-black":[
+   {label:"ブラック",asin:"B0iBdmhC5",url:"https://link.amazon/B0iBdmhC5"},
+   {label:"ホワイトアッシュ",asin:"B00CgIxeb",url:"https://link.amazon/B00CgIxeb"},
+   {label:"クラウドグレー",asin:"B0gbEN8M7",url:"https://link.amazon/B0gbEN8M7"},
+   {label:"トープベージュ",asin:"B0casYwYY",url:"https://link.amazon/B0casYwYY"},
+   {label:"ネイビー",asin:"B06bF5n2P",url:"https://link.amazon/B06bF5n2P"}
+ ]
+};
 const cfg=window.PRICE_WATCH_CONFIG||{};
 let mode=localStorage.getItem("priceWatchMode")||"normal";
 let state={products:[]};
@@ -88,6 +100,12 @@ function variantHtml(p){
   if(!p.variant_offers?.length)return "";
   return '<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">色ごとの最安を見る</summary><div class="variantgrid">'+p.variant_offers.map(v=>'<div class="variantrow"><span>'+esc(v.variant_label)+'</span><b>'+yen(effective(v.offer))+'</b></div>').join("")+'</div></details>';
 }
+function amazonHtml(p){
+  const refs=AMAZON_REFERENCES[p.id]||[];
+  if(!refs.length)return "";
+  const rows=refs.map(r=>'<div class="amazonrow"><div><b>'+esc(r.label)+'</b><div class="small">ASIN '+esc(r.asin)+'</div></div><a class="amazonlink" href="'+esc(r.url)+'" target="_blank" rel="noopener">Amazonで確認</a></div>').join("");
+  return '<div class="amazonbox"><div class="amazonhead"><b>Amazon参考リンク</b><span class="chip">API未接続</span></div><div class="small" style="margin:4px 0 7px">Amazon価格は自動取得できません。表示価格を確認し、対象商品なら「らくベビ割引10%」適用後を目安に比較します。</div>'+rows+'</div>';
+}
 function render(){
  const map=new Map((state.products||[]).map(p=>[p.id,p]));
  const list=PRODUCTS.map(base=>({...base,...(map.get(base.id)||{}),offers:(map.get(base.id)?.offers||[])}));
@@ -101,7 +119,7 @@ function render(){
        '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+' −'+yen(best.benefit_discount)+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
        '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        ((p.color_options||[]).length?('<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">カラー一覧を見る</summary><div class="chips" style="margin-top:8px">'+(p.color_options||[]).map(v=>'<span class="chip'+(v.status==="ended"?' warn':'')+'">'+esc(v.name)+(v.note?'（'+esc(v.note)+'）':'')+'</span>').join("")+'</div></details>'):'')+
-       variantHtml(p)+offerListHtml(offers)+
+       variantHtml(p)+offerListHtml(offers)+amazonHtml(p)+
        (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">最安の販売先を開く</a>':'')
      :'<div class="empty">まだ価格データがありません。</div>')+
    '</section>'
@@ -124,7 +142,7 @@ async function loadLatest(){
    const data=await api("latest");
    state={products:data.products||fallback()};
    $("statusTitle").textContent="自動監視中";$("statusTitle").className="ok";
-   const ps=data.providers_configured||{}; const providers=[ps.yahoo?"Yahoo!○":"Yahoo!未設定",ps.rakuten?"楽天○":"楽天未設定",ps.amazon?"Amazon○":"Amazon未設定"].join(" / "); $("statusText").textContent=(data.schedule_label||"定期チェック設定済み")+" ・ "+providers;
+   const ps=data.providers_configured||{}; const providers=[ps.yahoo?"Yahoo!○":"Yahoo!未設定",ps.rakuten?"楽天○":"楽天未設定",ps.amazon?"Amazon API○":"Amazon参考リンク○"].join(" / "); $("statusText").textContent=(data.schedule_label||"定期チェック設定済み")+" ・ "+providers;
  }catch(e){
    state={products:fallback()};
    $("statusTitle").textContent=cfg.apiBase?"接続エラー":"バックエンド未接続";
