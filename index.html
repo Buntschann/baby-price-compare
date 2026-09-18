@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.0-dev">
+<meta name="app-version" content="6.0.1">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -34,7 +34,14 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 
 <div class="status">
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
-  <div class="small" id="lastChecked">最終確認：—</div>
+  <div style="text-align:right">
+    <div class="small" id="lastChecked">最終確認：—</div>
+    <div class="small" id="appVersion">アプリ v6.0.1</div>
+  </div>
+</div>
+<div class="status" id="updateBox" style="display:none">
+  <div><b class="ok">新しいバージョンがあります</b><div class="small" id="updateText"></div></div>
+  <button class="primary" id="updateBtn">最新版に更新</button>
 </div>
 
 <div class="mode">
@@ -54,8 +61,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 </div>
 
-<script src="config.js"></script>
+<script src="config.js?v=6.0.1"></script>
 <script>
+const APP_VERSION="6.0.1";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -122,7 +130,41 @@ async function refreshNow(){
 }
 document.querySelectorAll(".modeBtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 $("refreshBtn").onclick=refreshNow;
-setMode(mode);loadLatest();
+
+function extractRemoteVersion(text){
+  const m=text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i)
+    || text.match(/<meta\s+content=["']([^"']+)["']\s+name=["']app-version["']/i);
+  return m?m[1]:null;
+}
+async function checkAppUpdate(){
+  try{
+    const u=new URL("./index.html",location.href);
+    u.searchParams.set("_appcheck",Date.now().toString());
+    const res=await fetch(u,{cache:"no-store",headers:{"Cache-Control":"no-cache"}});
+    if(!res.ok)return;
+    const text=await res.text();
+    const latest=extractRemoteVersion(text);
+    if(latest && latest!==APP_VERSION){
+      $("updateText").textContent="v"+APP_VERSION+" → v"+latest;
+      $("updateBox").style.display="flex";
+    }
+  }catch{}
+}
+function forceAppUpdate(){
+  const u=new URL("./",location.href);
+  u.searchParams.set("_v",Date.now().toString());
+  location.replace(u.href);
+}
+$("updateBtn").onclick=forceAppUpdate;
+
+async function setupServiceWorker(){
+  if(!("serviceWorker" in navigator) || location.protocol!=="https:")return;
+  try{
+    const reg=await navigator.serviceWorker.register("./sw.js?v="+APP_VERSION,{updateViaCache:"none"});
+    await reg.update();
+  }catch{}
+}
+setMode(mode);loadLatest();setupServiceWorker();setTimeout(checkAppUpdate,700);
 </script>
 </body>
 </html>
