@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.3.0">
+<meta name="app-version" content="6.3.1">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -37,7 +37,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.3.0</div>
+    <div class="small" id="appVersion">アプリ v6.3.1</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -74,9 +74,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   </div>
 </div>
 
-<script src="config.js?v=6.3.0"></script>
+<script src="config.js?v=6.3.1"></script>
 <script>
-const APP_VERSION="6.3.0";
+const APP_VERSION="6.3.1";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -84,15 +84,15 @@ const PRODUCTS=[
  {id:"laclis-ab-black",name:"ラクリス AB",jan:"4969220010663",category:"抱っこ紐"}
 ];
 const AMAZON_REFERENCES={
- "culmove-js-black":[{label:"ブラック",asin:"B0i3XY99N",url:"https://link.amazon/B0i3XY99N"}],
- "culmove-js-brown":[{label:"ブラウン",asin:"B082CnKey",url:"https://link.amazon/B082CnKey"}],
- "luxuna-air-plus-blue":[{label:"ブルー",asin:"B07oWt7Be",url:"https://link.amazon/B07oWt7Be"}],
+ "culmove-js-black":[{label:"ブラック",variant_label:"ブラック BK",asin:"B0i3XY99N",url:"https://link.amazon/B0i3XY99N"}],
+ "culmove-js-brown":[{label:"ブラウン",variant_label:"ブラウン BR",asin:"B082CnKey",url:"https://link.amazon/B082CnKey"}],
+ "luxuna-air-plus-blue":[{label:"ブルー",variant_label:"ブルー BL",asin:"B07oWt7Be",url:"https://link.amazon/B07oWt7Be"}],
  "laclis-ab-black":[
-   {label:"ブラック",asin:"B0iBdmhC5",url:"https://link.amazon/B0iBdmhC5"},
-   {label:"ホワイトアッシュ",asin:"B00CgIxeb",url:"https://link.amazon/B00CgIxeb"},
-   {label:"クラウドグレー",asin:"B0gbEN8M7",url:"https://link.amazon/B0gbEN8M7"},
-   {label:"トープベージュ",asin:"B0casYwYY",url:"https://link.amazon/B0casYwYY"},
-   {label:"ネイビー",asin:"B06bF5n2P",url:"https://link.amazon/B06bF5n2P"}
+   {label:"ブラック",variant_label:"ブラック",asin:"B0iBdmhC5",url:"https://link.amazon/B0iBdmhC5"},
+   {label:"ホワイトアッシュ",variant_label:"ホワイトアッシュ",asin:"B00CgIxeb",url:"https://link.amazon/B00CgIxeb"},
+   {label:"クラウドグレー",variant_label:"クラウドグレー",asin:"B0gbEN8M7",url:"https://link.amazon/B0gbEN8M7"},
+   {label:"トープベージュ",variant_label:"トープベージュ",asin:"B0casYwYY",url:"https://link.amazon/B0casYwYY"},
+   {label:"ネイビー",variant_label:"ネイビー",asin:"B06bF5n2P",url:"https://link.amazon/B06bF5n2P"}
  ]
 };
 const cfg=window.PRICE_WATCH_CONFIG||{};
@@ -121,7 +121,7 @@ function amazonOffer(productId,ref){
     benefit_discount:coupon+raku,
     benefit_label:(coupon?"クーポン "+yen(coupon)+" / ":"")+(m.raku?"らくベビ概算10% "+yen(raku):""),
     cash_total:effective,effective_normal:effective,effective_all:effective,
-    variant_label:ref.label,fetched_at:m.at,manual_amazon:true,
+    variant_label:ref.variant_label||ref.label,fetched_at:m.at,manual_amazon:true,
     amazon_coupon:coupon,amazon_raku:raku
   };
 }
@@ -136,9 +136,17 @@ function offerListHtml(offers){
   if(!offers?.length)return "";
   return '<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">販売店候補を見る（'+offers.length+'件）</summary><div class="offerlist">'+offers.slice(0,10).map(o=>'<div class="offerrow"><div><b>'+esc(o.store_name)+'</b><div class="small">'+esc(o.provider)+(o.variant_label?' ・ '+esc(o.variant_label):'')+'</div></div><div class="small">本体 '+yen(o.price)+(o.benefit_discount?' / 特典 −'+yen(o.benefit_discount):'')+'</div><div class="offerprice">'+yen(effective(o))+(o.url?'<br><a class="offerlink" href="'+esc(o.url)+'" target="_blank" rel="noopener">開く</a>':'')+'</div></div>').join("")+'</div></details>';
 }
-function variantHtml(p){
-  if(!p.variant_offers?.length)return "";
-  return '<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">色ごとの最安を見る</summary><div class="variantgrid">'+p.variant_offers.map(v=>'<div class="variantrow"><span>'+esc(v.variant_label)+'</span><b>'+yen(effective(v.offer))+'</b></div>').join("")+'</div></details>';
+function variantHtml(p,offers){
+  const grouped=new Map();
+  for(const o of (offers||[])){
+    if(!o.variant_label)continue;
+    const key=String(o.variant_label).trim();
+    const prev=grouped.get(key);
+    if(!prev || (effective(o)??Infinity)<(effective(prev)??Infinity)) grouped.set(key,o);
+  }
+  if(!grouped.size)return "";
+  const rows=[...grouped.entries()].sort((a,b)=>a[0].localeCompare(b[0],"ja"));
+  return '<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">色ごとの最安を見る</summary><div class="variantgrid">'+rows.map(([label,o])=>'<div class="variantrow"><span>'+esc(label)+(o.manual_amazon?' <span class="chip best">Amazon</span>':'')+'</span><b>'+yen(effective(o))+'</b></div>').join("")+'</div></details>';
 }
 function amazonHtml(p){
   const refs=AMAZON_REFERENCES[p.id]||[];
@@ -163,7 +171,7 @@ function render(){
        '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+(best.manual_amazon?'':' −'+yen(best.benefit_discount))+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
        '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        ((p.color_options||[]).length?('<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">カラー一覧を見る</summary><div class="chips" style="margin-top:8px">'+(p.color_options||[]).map(v=>'<span class="chip'+(v.status==="ended"?' warn':'')+'">'+esc(v.name)+(v.note?'（'+esc(v.note)+'）':'')+'</span>').join("")+'</div></details>'):'')+
-       variantHtml(p)+offerListHtml(offers)+amazonHtml(p)+
+       variantHtml(p,offers)+offerListHtml(offers)+amazonHtml(p)+
        (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">最安の販売先を開く</a>':'')
      :'<div class="empty">まだ価格データがありません。</div>')+
    '</section>'
