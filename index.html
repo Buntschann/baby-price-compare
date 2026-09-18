@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.2.0">
+<meta name="app-version" content="6.3.0">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -19,7 +19,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
 .price{font-size:27px;font-weight:850;letter-spacing:-.03em}.label{font-size:11px;color:var(--muted)}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-end}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;padding:4px 7px;border-radius:999px;background:var(--soft)}.best{background:var(--goodbg);color:var(--good);font-weight:800}.history{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}.shop{font-weight:750}.link{display:inline-block;margin-top:10px;color:inherit;text-decoration:underline;text-underline-offset:3px}
 .empty{padding:28px 8px;text-align:center;color:var(--muted)}.footer{margin-top:18px;font-size:11px;color:var(--muted);line-height:1.55}
-.offerlist{margin-top:9px;border-top:1px solid var(--line)}.offerrow{padding:9px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.2fr .9fr auto;gap:8px;align-items:center}.offerrow:last-child{border-bottom:0}.offerprice{font-weight:800;text-align:right}.offerlink{font-size:12px;color:inherit;text-decoration:underline}.variantgrid{display:grid;gap:7px;margin-top:9px}.variantrow{display:flex;justify-content:space-between;gap:10px;background:var(--soft);padding:8px 9px;border-radius:10px}.variantrow b{font-size:13px}.amazonbox{margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:12px;background:#fffaf4}.amazonhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.amazonrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.amazonrow:first-child{border-top:0}.amazonlink{display:inline-block;padding:7px 10px;border-radius:9px;background:var(--soft);color:inherit;text-decoration:none;font-size:12px;font-weight:700}
+.offerlist{margin-top:9px;border-top:1px solid var(--line)}.offerrow{padding:9px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.2fr .9fr auto;gap:8px;align-items:center}.offerrow:last-child{border-bottom:0}.offerprice{font-weight:800;text-align:right}.offerlink{font-size:12px;color:inherit;text-decoration:underline}.variantgrid{display:grid;gap:7px;margin-top:9px}.variantrow{display:flex;justify-content:space-between;gap:10px;background:var(--soft);padding:8px 9px;border-radius:10px}.variantrow b{font-size:13px}.amazonbox{margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:12px;background:#fffaf4}.amazonhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.amazonrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.amazonrow:first-child{border-top:0}.amazonlink{display:inline-block;padding:7px 10px;border-radius:9px;background:var(--soft);color:inherit;text-decoration:none;font-size:12px;font-weight:700}.amazonactions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.amazonedit{padding:7px 10px;border-radius:9px;background:var(--accent);color:#fff;font-size:12px;font-weight:700}.amazonmeta{margin-top:3px}.amazonprice{font-weight:850}.manual{background:#fff7e8}.modalback{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;padding:12px;z-index:20}.modal{width:min(520px,100%);background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.2)}.modal h3{margin:0 0 4px}.field{margin-top:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input[type=number]{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff}.checkrow{display:flex;gap:8px;align-items:center;margin-top:12px}.modalactions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
 @media(max-width:700px){header{display:block}header .actions{margin-top:9px}.grid{grid-template-columns:1fr}.switch button{flex:1}.status{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -37,7 +37,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.2.0</div>
+    <div class="small" id="appVersion">アプリ v6.3.0</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -58,13 +58,25 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 <div id="products" class="grid"></div>
 <div class="footer">
   ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
-  ※Amazonは現在API未接続のため、登録済み商品ページへの参考リンクを表示します。Amazon上で対象商品だった場合は「らくベビ割引10%」適用後を目安に比較します。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
+  ※AmazonはAPI未接続のため手入力です。入力値はこの端末内に保存されます。らくベビは「クーポン後価格から10%OFF・最大1万円」として概算し、Amazon画面で対象外の場合はチェックを外してください。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
 </div>
 </div>
 
-<script src="config.js?v=6.2.0"></script>
+<div class="modalback" id="amazonModal">
+  <div class="modal">
+    <h3 id="amazonModalTitle">Amazon価格を入力</h3>
+    <div class="small" id="amazonModalSub"></div>
+    <div class="field"><label>Amazon表示価格（税込）</label><input id="amazonPriceInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例 29800"></div>
+    <div class="field"><label>クーポン割引額（円・なければ0）</label><input id="amazonCouponInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例 2000"></div>
+    <label class="checkrow"><input id="amazonRakuInput" type="checkbox" checked> <span>らくベビ割引10%の対象として計算</span></label>
+    <div class="small" style="margin-top:7px">概算：表示価格 − クーポン → その金額から10%OFF（最大1万円）。Amazon画面で対象外ならチェックを外してください。</div>
+    <div class="modalactions"><button class="secondary" id="amazonCancelBtn">キャンセル</button><button class="primary" id="amazonSaveBtn">保存して比較</button></div>
+  </div>
+</div>
+
+<script src="config.js?v=6.3.0"></script>
 <script>
-const APP_VERSION="6.2.0";
+const APP_VERSION="6.3.0";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -86,6 +98,34 @@ const AMAZON_REFERENCES={
 const cfg=window.PRICE_WATCH_CONFIG||{};
 let mode=localStorage.getItem("priceWatchMode")||"normal";
 let state={products:[]};
+let amazonEditing=null;
+const AMAZON_STORAGE_KEY="babyPriceWatchAmazonManualV1";
+function loadAmazonManual(){try{return JSON.parse(localStorage.getItem(AMAZON_STORAGE_KEY)||"{}")}catch{return {}}}
+function saveAmazonManual(x){localStorage.setItem(AMAZON_STORAGE_KEY,JSON.stringify(x))}
+function amazonManualKey(productId,asin){return productId+"::"+asin}
+function latestAmazonManual(productId,asin){
+  const all=loadAmazonManual();
+  const arr=all[amazonManualKey(productId,asin)]||[];
+  return arr.length?arr[arr.length-1]:null;
+}
+function amazonOffer(productId,ref){
+  const m=latestAmazonManual(productId,ref.asin);
+  if(!m)return null;
+  const price=Math.max(0,Number(m.price)||0), coupon=Math.max(0,Number(m.coupon)||0);
+  const afterCoupon=Math.max(0,price-coupon);
+  const raku=m.raku?Math.min(10000,Math.floor(afterCoupon*0.10)):0;
+  const effective=Math.max(0,afterCoupon-raku);
+  return {
+    provider:"Amazon（手入力）",provider_item_id:ref.asin,store_name:"Amazon.co.jp",
+    title:ref.label,url:ref.url,price,shipping:0,normal_points:0,limited_points:0,
+    benefit_discount:coupon+raku,
+    benefit_label:(coupon?"クーポン "+yen(coupon)+" / ":"")+(m.raku?"らくベビ概算10% "+yen(raku):""),
+    cash_total:effective,effective_normal:effective,effective_all:effective,
+    variant_label:ref.label,fetched_at:m.at,manual_amazon:true,
+    amazon_coupon:coupon,amazon_raku:raku
+  };
+}
+function amazonOffersForProduct(productId){return (AMAZON_REFERENCES[productId]||[]).map(r=>amazonOffer(productId,r)).filter(Boolean)}
 const $=x=>document.getElementById(x);
 const yen=n=>Number.isFinite(Number(n))?Math.round(Number(n)).toLocaleString("ja-JP")+"円":"—";
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
@@ -103,20 +143,24 @@ function variantHtml(p){
 function amazonHtml(p){
   const refs=AMAZON_REFERENCES[p.id]||[];
   if(!refs.length)return "";
-  const rows=refs.map(r=>'<div class="amazonrow"><div><b>'+esc(r.label)+'</b><div class="small">ASIN '+esc(r.asin)+'</div></div><a class="amazonlink" href="'+esc(r.url)+'" target="_blank" rel="noopener">Amazonで確認</a></div>').join("");
-  return '<div class="amazonbox"><div class="amazonhead"><b>Amazon参考リンク</b><span class="chip">API未接続</span></div><div class="small" style="margin:4px 0 7px">Amazon価格は自動取得できません。表示価格を確認し、対象商品なら「らくベビ割引10%」適用後を目安に比較します。</div>'+rows+'</div>';
+  const rows=refs.map(r=>{
+    const o=amazonOffer(p.id,r);
+    const meta=o?'<div class="amazonmeta small">入力 '+new Date(o.fetched_at).toLocaleString("ja-JP")+'<br>表示 '+yen(o.price)+(o.amazon_coupon?' − クーポン '+yen(o.amazon_coupon):'')+(o.amazon_raku?' − らくベビ '+yen(o.amazon_raku):'')+'<br><span class="amazonprice">実質 '+yen(o.cash_total)+'</span></div>':'<div class="amazonmeta small">価格未入力</div>';
+    return '<div class="amazonrow"><div><b>'+esc(r.label)+'</b><div class="small">ASIN '+esc(r.asin)+'</div>'+meta+'</div><div class="amazonactions"><a class="amazonlink" href="'+esc(r.url)+'" target="_blank" rel="noopener">① Amazonで確認</a><button class="amazonedit" data-amazon-edit="'+esc(p.id)+'|'+esc(r.asin)+'">② 価格入力</button></div></div>';
+  }).join("");
+  return '<div class="amazonbox"><div class="amazonhead"><b>Amazonかんたん入力</b><span class="chip">手入力</span></div><div class="small" style="margin:4px 0 7px">Amazonを開いて価格・クーポンを確認 → 戻って価格入力。保存した実質価格は上の最安比較にも参加します。</div>'+rows+'</div>';
 }
 function render(){
  const map=new Map((state.products||[]).map(p=>[p.id,p]));
  const list=PRODUCTS.map(base=>({...base,...(map.get(base.id)||{}),offers:(map.get(base.id)?.offers||[])}));
  $("products").innerHTML=list.map(p=>{
-   const offers=[...p.offers].sort((a,b)=>(effective(a)??Infinity)-(effective(b)??Infinity));
+   const offers=[...p.offers,...amazonOffersForProduct(p.id)].sort((a,b)=>(effective(a)??Infinity)-(effective(b)??Infinity));
    const best=offers[0];
    const hist=mode==="cash"?p.history_low_cash:mode==="all"?p.history_low_all:p.history_low_normal;
    return '<section class="product">'+
      '<h2>'+esc(p.name)+'</h2><div class="jan">JAN '+esc(p.jan)+'</div>'+
      (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
-       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+' −'+yen(best.benefit_discount)+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
+       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+(best.manual_amazon?'':' −'+yen(best.benefit_discount))+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
        '<div class="history"><div class="small">過去最安 '+yen(hist)+' ・ '+(p.last_checked_at?'最終確認 '+new Date(p.last_checked_at).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        ((p.color_options||[]).length?('<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">カラー一覧を見る</summary><div class="chips" style="margin-top:8px">'+(p.color_options||[]).map(v=>'<span class="chip'+(v.status==="ended"?' warn':'')+'">'+esc(v.name)+(v.note?'（'+esc(v.note)+'）':'')+'</span>').join("")+'</div></details>'):'')+
        variantHtml(p)+offerListHtml(offers)+amazonHtml(p)+
@@ -159,6 +203,39 @@ async function refreshNow(){
 }
 document.querySelectorAll(".modeBtn").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 $("refreshBtn").onclick=refreshNow;
+
+function openAmazonEditor(productId,asin){
+  const ref=(AMAZON_REFERENCES[productId]||[]).find(x=>x.asin===asin); if(!ref)return;
+  amazonEditing={productId,asin};
+  const m=latestAmazonManual(productId,asin);
+  $("amazonModalTitle").textContent="Amazon価格を入力";
+  $("amazonModalSub").textContent=ref.label+" ・ "+asin;
+  $("amazonPriceInput").value=m?.price??"";
+  $("amazonCouponInput").value=m?.coupon??0;
+  $("amazonRakuInput").checked=m?.raku??true;
+  $("amazonModal").style.display="flex";
+  setTimeout(()=>$("amazonPriceInput").focus(),50);
+}
+function closeAmazonEditor(){$("amazonModal").style.display="none";amazonEditing=null}
+$("amazonCancelBtn").onclick=closeAmazonEditor;
+$("amazonModal").onclick=e=>{if(e.target===$("amazonModal"))closeAmazonEditor()};
+$("amazonSaveBtn").onclick=()=>{
+  if(!amazonEditing)return;
+  const price=Math.round(Number($("amazonPriceInput").value)||0);
+  const coupon=Math.round(Number($("amazonCouponInput").value)||0);
+  if(price<=0){alert("Amazon表示価格を入れてくだまい。");return}
+  if(coupon<0||coupon>price){alert("クーポン額を確認してくだまい。");return}
+  const all=loadAmazonManual(),key=amazonManualKey(amazonEditing.productId,amazonEditing.asin);
+  const arr=all[key]||[];
+  arr.push({price,coupon,raku:$("amazonRakuInput").checked,at:new Date().toISOString()});
+  all[key]=arr.slice(-50);
+  saveAmazonManual(all);
+  closeAmazonEditor();render();
+};
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-amazon-edit]"); if(!b)return;
+  const [productId,asin]=b.dataset.amazonEdit.split("|"); openAmazonEditor(productId,asin);
+});
 
 function extractRemoteVersion(text){
   const m=text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i)
