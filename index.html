@@ -252,7 +252,7 @@ async function migrateLegacyPurchases(){
   const legacy=loadLegacyPurchases();
   if(!Object.keys(legacy).length||!sb||!currentUser)return;
   const existing=new Set(Object.keys(purchases));
-  let moved=0;
+  let moved=0,failed=false;
   for(const g of DISPLAY_GROUPS){
     const p=legacy[g.id];
     if(!p||existing.has(g.id))continue;
@@ -263,11 +263,12 @@ async function migrateLegacyPurchases(){
       item_url:p.url||null,memo:p.memo||null,updated_by:currentUser.id,updated_at:new Date().toISOString()
     };
     const {error}=await sb.from("price_watch_purchases").upsert(row,{onConflict:"group_id"});
-    if(!error)moved++;
+    if(error){failed=true;console.error("legacy purchase migration",error)}
+    else moved++;
   }
-  if(moved){
+  if(!failed){
     localStorage.removeItem(PURCHASE_STORAGE_KEY);
-    await loadSharedPurchases();
+    if(moved)await loadSharedPurchases();
   }
 }
 
@@ -632,6 +633,11 @@ async function initAuth(){
   if(session)await enterApp(session.user);else showAuth();
   sb.auth.onAuthStateChange((event,session)=>{
     if(event==="SIGNED_OUT"||!session){currentUser=null;purchases={};showAuth()}
+  });
+  document.addEventListener("visibilitychange",async()=>{
+    if(document.visibilityState==="visible"&&currentUser){
+      try{await loadSharedPurchases();render()}catch(e){console.warn(e)}
+    }
   });
 }
 
