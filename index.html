@@ -6,14 +6,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.5.0">
+<meta name="app-version" content="6.6.0">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif}.authscreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.authcard{width:min(430px,100%);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}.authcard h1{margin:0 0 6px}.authcard label{display:block;margin-top:12px;font-size:12px;color:var(--muted)}.authcard input{width:100%;font:inherit;margin-top:5px;padding:12px;border:1px solid var(--line);border-radius:11px}.authcard .primary{width:100%;margin-top:14px}.loginmsg{font-size:12px;color:var(--warn);margin-top:10px;min-height:18px}
 button{font:inherit;border:0;border-radius:12px;padding:11px 14px;cursor:pointer}.wrap{max-width:980px;margin:auto;padding:16px 12px 34px}
 header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}h1{font-size:25px;margin:0 0 4px}.sub,.small{font-size:12px;color:var(--muted);line-height:1.5}
-.primary{background:var(--accent);color:#fff}.secondary{background:var(--soft);color:var(--text)}.ghost{background:white;border:1px solid var(--line)}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.primary{background:var(--accent);color:#fff}.secondary{background:var(--soft);color:var(--text)}.ghost{background:white;border:1px solid var(--line)}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.accountline{font-size:11px;color:var(--muted);margin-top:5px;text-align:right}
 .status{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.ok{color:var(--good)}.warn{color:var(--warn)}
 .mode{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.switch{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.switch button.active{background:var(--accent);color:white}
 .totals{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.totalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px}.totalbox{background:var(--soft);border-radius:12px;padding:11px}.totalnum{font-size:24px;font-weight:850}.purchasebar{margin-top:10px;padding:11px;border-radius:12px;background:var(--goodbg);display:flex;justify-content:space-between;gap:10px;align-items:center}.purchasebar b{color:var(--good)}.groupcheck{display:flex;gap:8px;align-items:flex-start}.colorpick{display:flex;gap:8px;align-items:center;min-width:0;flex:1}.colorpick input{width:20px;height:20px;flex:0 0 auto}.variantlink{display:flex;justify-content:space-between;gap:10px;align-items:center;min-width:0;flex:1;color:inherit;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.producthead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.purchasedbadge{display:inline-block;font-size:11px;padding:5px 8px;border-radius:999px;background:var(--goodbg);color:var(--good);font-weight:800}.purchasebox{margin-top:11px;padding:10px;border-radius:12px;background:var(--goodbg);border:1px solid #cfe7d7}.purchaseactions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.purchasebtn{background:var(--good);color:#fff}.danger{background:#f6e7e5;color:#8a332c}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
@@ -24,20 +24,32 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </style>
 </head>
 <body>
+<section class="authscreen" id="authScreen">
+  <div class="authcard">
+    <div class="small">BABY PRICE WATCH</div>
+    <h1>ベビー価格ウォッチ</h1>
+    <div class="sub">名付けアプリと同じ家族アカウントでログインしま。</div>
+    <label>メールアドレス<input id="loginEmail" type="email" autocomplete="username" placeholder="name@example.com"></label>
+    <label>パスワード<input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••"></label>
+    <button class="primary" id="loginBtn">ログイン</button>
+    <div class="loginmsg" id="loginMessage"></div>
+  </div>
+</section>
+<div id="appShell" hidden>
 <div class="wrap">
 <header>
   <div>
     <h1>ベビー価格ウォッチ</h1>
     <div class="sub">ベビーカー・チャイルドシート・抱っこ紐を固定監視。色違いもまとめて、その時点の最安を自動比較します。</div>
   </div>
-  <div class="actions"><button class="secondary" id="updatesBtn">更新履歴</button><button class="secondary" id="checkUpdateBtn">更新確認</button><button class="primary" id="refreshBtn">今すぐ価格チェック</button></div>
+  <div><div class="actions"><button class="secondary" id="updatesBtn">更新履歴</button><button class="secondary" id="checkUpdateBtn">更新確認</button><button class="secondary" id="logoutBtn">ログアウト</button><button class="primary" id="refreshBtn">今すぐ価格チェック</button></div><div class="accountline" id="signedInAs"></div></div>
 </header>
 
 <div class="status">
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.5.0</div>
+    <div class="small" id="appVersion">アプリ v6.6.0</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -62,13 +74,14 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
     <div class="totalbox"><div class="label">✓ 選んだ色での最安</div><div class="totalnum" id="selectedTotal">—</div><div class="small" id="selectedTotalSub">クルムーヴとラクリスの色を選んでくだまい</div></div>
     <div class="totalbox"><div class="label">色指定による差額</div><div class="totalnum" id="colorDelta">—</div><div class="small" id="colorDeltaSub">色無視の最安との差</div></div>
   </div>
-  <div class="purchasebar"><div><b>購入済み</b><div class="small" id="purchaseSummaryText">0 / 3種類 ・ 合計0円</div></div><div class="small">購入情報はこの端末内だけに保存</div></div>
+  <div class="purchasebar"><div><b>購入済み</b><div class="small" id="purchaseSummaryText">0 / 3種類 ・ 合計0円</div></div><div class="small">家族2人で共有同期</div></div>
 </div>
 
 <div id="products" class="grid"></div>
 <div class="footer">
   ※「全ポイント込み」はAPIから取得できたポイントのみ。Yahoo!ショッピング等のログイン状態・会員ランク・個別キャンペーンによる還元は、公式APIで取得できない場合があります。<br>
-  ※Amazonの手入力値と購入済み情報はこの端末内に保存され、公開データベースには送信しません。らくベビは「クーポン後価格から10%OFF・最大1万円」として概算し、Amazon画面で対象外の場合はチェックを外してください。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
+  ※Amazonの手入力値はこの端末内に保存。購入済み情報はログイン中の家族だけがアクセスできる共有データとして保存します。らくベビは「クーポン後価格から10%OFF・最大1万円」として概算し、Amazon画面で対象外の場合はチェックを外してください。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
+</div>
 </div>
 </div>
 
@@ -78,14 +91,21 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.5.0</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.6.0</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.5.0</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.6.0</b><span>最新</span></div><ul>
+      <li>名付けアプリと同じメールアドレス＋パスワードでログイン可能に</li>
+      <li>購入情報を家族2人で共有同期</li>
+      <li>購入情報は家族メンバーだけ読書きできるRLSで保護</li>
+      <li>注文番号を購入情報に追加</li>
+      <li>端末内に残っている旧購入情報は初回ログイン時に共有データへ自動移行</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.5.0</b></div><ul>
       <li>商品を「購入済み」にする機能を追加</li>
       <li>購入日・色・購入店・購入価格・URL・メモを記録可能に</li>
       <li>購入済み件数と購入合計を表示</li>
       <li>購入情報の編集・購入済み解除に対応</li>
-      <li>購入情報は公開せず、この端末内だけに保存</li>
+      <li>購入情報は端末内に保存</li>
     </ul></section>
     <section class="historyentry"><div class="versionline"><b>v6.4.3</b></div><ul>
       <li>最新版情報の正本をSupabaseへ移行</li>
@@ -166,6 +186,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
     <div class="field"><label>購入した色</label><input id="purchaseColorInput" type="text" placeholder="例 ブラック BK"></div>
     <div class="field"><label>購入店</label><input id="purchaseStoreInput" type="text" placeholder="例 Amazon.co.jp"></div>
     <div class="field"><label>購入価格（税込）</label><input id="purchasePriceInput" type="number" inputmode="numeric" min="0" step="1" placeholder="例 45031"></div>
+    <div class="field"><label>注文番号</label><input id="purchaseOrderInput" type="text" placeholder="必要な場合だけ"></div>
     <div class="field"><label>購入ページ / 商品URL</label><input id="purchaseUrlInput" type="url" inputmode="url" placeholder="https://..."></div>
     <div class="field"><label>メモ</label><textarea id="purchaseMemoInput" placeholder="クーポン、ポイント、到着予定、保証メモなど"></textarea></div>
     <div class="modalactions"><button class="secondary" id="purchaseCancelBtn">キャンセル</button><button class="primary" id="purchaseSaveBtn">購入済みとして保存</button></div>
@@ -184,9 +205,10 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   </div>
 </div>
 
-<script src="config.js?v=6.5.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js?v=6.6.0"></script>
 <script>
-const APP_VERSION="6.5.0";
+const APP_VERSION="6.6.0";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -204,10 +226,50 @@ function saveColorSelections(){localStorage.setItem(COLOR_SELECTION_KEY,JSON.str
 let colorSelections=loadColorSelections();
 
 const PURCHASE_STORAGE_KEY="babyPriceWatchPurchasesV1";
-function loadPurchases(){try{return JSON.parse(localStorage.getItem(PURCHASE_STORAGE_KEY)||"{}")}catch{return {}}}
-function savePurchases(){localStorage.setItem(PURCHASE_STORAGE_KEY,JSON.stringify(purchases))}
-let purchases=loadPurchases();
+function loadLegacyPurchases(){try{return JSON.parse(localStorage.getItem(PURCHASE_STORAGE_KEY)||"{}")}catch{return {}}}
+let purchases={};
 let purchaseEditing=null;
+
+async function loadSharedPurchases(){
+  if(!sb||!currentUser)return;
+  const {data,error}=await sb.from("price_watch_purchases").select("*").order("updated_at",{ascending:false});
+  if(error)throw error;
+  purchases={};
+  for(const row of (data||[])){
+    purchases[row.group_id]={
+      date:row.purchased_at||"",
+      color:row.color||"",
+      store:row.store_name||"",
+      price:Number(row.purchase_price)||0,
+      order_number:row.order_number||"",
+      url:row.item_url||"",
+      memo:row.memo||"",
+      saved_at:row.updated_at||""
+    };
+  }
+}
+async function migrateLegacyPurchases(){
+  const legacy=loadLegacyPurchases();
+  if(!Object.keys(legacy).length||!sb||!currentUser)return;
+  const existing=new Set(Object.keys(purchases));
+  let moved=0;
+  for(const g of DISPLAY_GROUPS){
+    const p=legacy[g.id];
+    if(!p||existing.has(g.id))continue;
+    const row={
+      group_id:g.id,category:g.category,product_name:g.name,
+      purchased_at:p.date||null,color:p.color||null,store_name:p.store||null,
+      purchase_price:Number(p.price)||0,order_number:p.order_number||null,
+      item_url:p.url||null,memo:p.memo||null,updated_by:currentUser.id,updated_at:new Date().toISOString()
+    };
+    const {error}=await sb.from("price_watch_purchases").upsert(row,{onConflict:"group_id"});
+    if(!error)moved++;
+  }
+  if(moved){
+    localStorage.removeItem(PURCHASE_STORAGE_KEY);
+    await loadSharedPurchases();
+  }
+}
 
 const AMAZON_REFERENCES={
  "culmove-js-black":[{label:"ブラック",variant_label:"ブラック BK",asin:"B0i3XY99N",url:"https://link.amazon/B0i3XY99N"}],
@@ -222,6 +284,8 @@ const AMAZON_REFERENCES={
  ]
 };
 const cfg=window.PRICE_WATCH_CONFIG||{};
+let sb=null;
+let currentUser=null;
 let mode=localStorage.getItem("priceWatchMode")||"normal";
 let state={products:[]};
 let amazonEditing=null;
@@ -319,7 +383,7 @@ function purchaseHtml(group){
   if(!p)return '<div class="purchaseactions"><button class="purchasebtn" data-purchase-edit="'+esc(group.id)+'">購入済みにする</button></div>';
   const date=p.date?new Date(p.date+"T00:00:00").toLocaleDateString("ja-JP"):"日付未入力";
   return '<div class="purchasebox"><div class="row"><div><span class="purchasedbadge">✓ 購入済み</span><div style="margin-top:6px"><b>'+esc(p.store||"購入店未入力")+'</b></div></div><div style="text-align:right"><div class="label">購入価格</div><div class="shop">'+yen(Number(p.price)||0)+'</div></div></div>'+
-    '<div class="small" style="margin-top:7px">'+esc(date)+(p.color?' ・ '+esc(p.color):'')+(p.memo?' ・ '+esc(p.memo):'')+'</div>'+
+    '<div class="small" style="margin-top:7px">'+esc(date)+(p.color?' ・ '+esc(p.color):'')+(p.order_number?' ・ 注文番号 '+esc(p.order_number):'')+(p.memo?' ・ '+esc(p.memo):'')+'</div>'+
     '<div class="purchaseactions">'+(p.url?'<a class="amazonlink" href="'+esc(p.url)+'" target="_blank" rel="noopener">購入ページ</a>':'')+'<button class="secondary" data-purchase-edit="'+esc(group.id)+'">編集</button><button class="danger" data-purchase-clear="'+esc(group.id)+'">購入済み解除</button></div></div>';
 }
 function renderPurchaseSummary(groups){
@@ -410,7 +474,7 @@ async function loadLatest(){
 }
 async function refreshNow(){
  const b=$("refreshBtn"),old=b.textContent;b.disabled=true;b.textContent="チェック中…";
- try{await api("refresh",{method:"POST",body:"{}"});await loadLatest()}
+ try{await api("refresh",{method:"POST",body:"{}"});await Promise.all([loadLatest(),loadSharedPurchases()])}
  catch(e){alert(e.message==="backend-not-configured"?"Supabaseバックエンドがまだ未設定です。":"価格チェックに失敗しました。")}
  finally{b.disabled=false;b.textContent=old}
 }
@@ -435,6 +499,7 @@ function openPurchaseEditor(groupId){
   $("purchaseColorInput").value=p?.color||selected?.variant_label||colorSelections[groupId]||"";
   $("purchaseStoreInput").value=p?.store||selected?.store_name||"";
   $("purchasePriceInput").value=p?.price??(selected?Math.round(effective(selected)||0):"");
+  $("purchaseOrderInput").value=p?.order_number||"";
   $("purchaseUrlInput").value=p?.url||selected?.url||"";
   $("purchaseMemoInput").value=p?.memo||"";
   $("purchaseModal").style.display="flex";
@@ -442,20 +507,30 @@ function openPurchaseEditor(groupId){
 function closePurchaseEditor(){$("purchaseModal").style.display="none";purchaseEditing=null}
 $("purchaseCancelBtn").onclick=closePurchaseEditor;
 $("purchaseModal").onclick=e=>{if(e.target===$("purchaseModal"))closePurchaseEditor()};
-$("purchaseSaveBtn").onclick=()=>{
-  if(!purchaseEditing)return;
+$("purchaseSaveBtn").onclick=async()=>{
+  if(!purchaseEditing||!sb||!currentUser)return;
   const price=Math.round(Number($("purchasePriceInput").value)||0);
   if(price<0){alert("購入価格を確認してくだまい。");return}
-  purchases[purchaseEditing]={
-    date:$("purchaseDateInput").value||"",
-    color:$("purchaseColorInput").value.trim(),
-    store:$("purchaseStoreInput").value.trim(),
-    price,
-    url:$("purchaseUrlInput").value.trim(),
-    memo:$("purchaseMemoInput").value.trim(),
-    saved_at:new Date().toISOString()
+  const g=DISPLAY_GROUPS.find(x=>x.id===purchaseEditing);if(!g)return;
+  const row={
+    group_id:g.id,category:g.category,product_name:g.name,
+    purchased_at:$("purchaseDateInput").value||null,
+    color:$("purchaseColorInput").value.trim()||null,
+    store_name:$("purchaseStoreInput").value.trim()||null,
+    purchase_price:price,
+    order_number:$("purchaseOrderInput").value.trim()||null,
+    item_url:$("purchaseUrlInput").value.trim()||null,
+    memo:$("purchaseMemoInput").value.trim()||null,
+    updated_by:currentUser.id,
+    updated_at:new Date().toISOString()
   };
-  savePurchases();closePurchaseEditor();render();
+  $("purchaseSaveBtn").disabled=true;
+  try{
+    const {error}=await sb.from("price_watch_purchases").upsert(row,{onConflict:"group_id"});
+    if(error)throw error;
+    await loadSharedPurchases();closePurchaseEditor();render();
+  }catch(e){alert("購入情報を保存できなま："+(e?.message||e))}
+  finally{$("purchaseSaveBtn").disabled=false}
 };
 
 function openAmazonEditor(productId,asin){
@@ -493,7 +568,11 @@ document.addEventListener("click",e=>{
   if(pclear){
     const g=DISPLAY_GROUPS.find(x=>x.id===pclear.dataset.purchaseClear);
     if(confirm((g?.name||"この商品")+"の購入済み情報を解除しまか？")){
-      delete purchases[pclear.dataset.purchaseClear];savePurchases();render();
+      (async()=>{
+        const {error}=await sb.from("price_watch_purchases").delete().eq("group_id",pclear.dataset.purchaseClear);
+        if(error){alert("解除できなま："+error.message);return}
+        await loadSharedPurchases();render();
+      })();
     }
     return;
   }
@@ -508,6 +587,53 @@ document.addEventListener("click",e=>{
   const b=e.target.closest("[data-amazon-edit]"); if(!b)return;
   const [productId,asin]=b.dataset.amazonEdit.split("|"); openAmazonEditor(productId,asin);
 });
+
+function showAuth(msg=""){
+  $("authScreen").style.display="flex";$("appShell").hidden=true;$("loginMessage").textContent=msg;
+}
+function showApp(){
+  $("authScreen").style.display="none";$("appShell").hidden=false;
+}
+async function enterApp(user){
+  currentUser=user;
+  const {data:member,error:memberError}=await sb.from("family_members").select("user_id,email").eq("user_id",user.id).maybeSingle();
+  if(memberError||!member){
+    await sb.auth.signOut();currentUser=null;showAuth("このアカウントは家族メンバーに登録されてなま。");return;
+  }
+  $("signedInAs").textContent="ログイン中："+(user.email||"");
+  showApp();
+  try{
+    await Promise.all([loadLatest(),loadSharedPurchases()]);
+    await migrateLegacyPurchases();
+    render();
+  }catch(e){
+    console.error(e);alert("共有データを読み込めなま："+(e?.message||e));
+  }
+  setupServiceWorker();setTimeout(checkAppUpdate,700);
+}
+async function login(){
+  $("loginMessage").textContent="ログイン中…";
+  const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+  if(!email||!password){$("loginMessage").textContent="メールアドレスとパスワードを入れてま。";return}
+  const {data,error}=await sb.auth.signInWithPassword({email,password});
+  if(error){$("loginMessage").textContent="ログインできなま："+error.message;return}
+  await enterApp(data.user);
+}
+async function logout(){
+  await sb.auth.signOut();currentUser=null;purchases={};showAuth("ログアウトしまし。");
+}
+async function initAuth(){
+  if(!cfg.supabaseUrl||!cfg.supabasePublishableKey||!window.supabase){showAuth("ログイン設定を読み込めなま。");return}
+  sb=window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey);
+  $("loginBtn").onclick=login;
+  $("loginPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+  $("logoutBtn").onclick=logout;
+  const {data:{session}}=await sb.auth.getSession();
+  if(session)await enterApp(session.user);else showAuth();
+  sb.auth.onAuthStateChange((event,session)=>{
+    if(event==="SIGNED_OUT"||!session){currentUser=null;purchases={};showAuth()}
+  });
+}
 
 function extractRemoteVersion(text){
   const m=text.match(/<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i)
@@ -619,7 +745,7 @@ async function setupServiceWorker(){
     await reg.update();
   }catch{}
 }
-setMode(mode);loadLatest();setupServiceWorker();setTimeout(checkAppUpdate,700);
+setMode(mode);initAuth();
 </script>
 </body>
 </html>
