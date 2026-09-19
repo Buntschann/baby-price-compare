@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.6.0">
+<meta name="app-version" content="6.6.1">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -49,7 +49,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.6.0</div>
+    <div class="small" id="appVersion">アプリ v6.6.1</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -70,8 +70,8 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 <div class="totals">
   <b>まとめて揃えると</b>
   <div class="totalgrid">
-    <div class="totalbox"><div class="label">色を考慮しない最安</div><div class="totalnum" id="allTotal">—</div><div class="small" id="allTotalSub">各商品で色を問わず最安を採用</div></div>
-    <div class="totalbox"><div class="label">✓ 選んだ色での最安</div><div class="totalnum" id="selectedTotal">—</div><div class="small" id="selectedTotalSub">クルムーヴとラクリスの色を選んでくだまい</div></div>
+    <div class="totalbox"><div class="label">購入済み＋残りの最安</div><div class="totalnum" id="allTotal">—</div><div class="small" id="allTotalSub">購入済みは実購入額、未購入は色不問の最安</div></div>
+    <div class="totalbox"><div class="label">✓ 購入済み＋選んだ色</div><div class="totalnum" id="selectedTotal">—</div><div class="small" id="selectedTotalSub">購入済みは実購入額、未購入は選択色の最安</div></div>
     <div class="totalbox"><div class="label">色指定による差額</div><div class="totalnum" id="colorDelta">—</div><div class="small" id="colorDeltaSub">色無視の最安との差</div></div>
   </div>
   <div class="purchasebar"><div><b>購入済み</b><div class="small" id="purchaseSummaryText">0 / 3種類 ・ 合計0円</div></div><div class="small">家族2人で共有同期</div></div>
@@ -91,9 +91,15 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.6.0</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.6.1</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.6.0</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.6.1</b><span>最新</span></div><ul>
+      <li>購入済みの商品は実際の購入価格を合計に反映</li>
+      <li>未購入の商品だけ現在の最安値を採用</li>
+      <li>色指定合計も、購入済みは実購入額・未購入だけ選択色の最安で計算</li>
+      <li>購入済みカードは「購入価格」を主表示し、現在相場も確認可能に</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.6.0</b></div><ul>
       <li>名付けアプリと同じメールアドレス＋パスワードでログイン可能に</li>
       <li>購入情報を家族2人で共有同期</li>
       <li>購入情報は家族メンバーだけ読書きできるRLSで保護</li>
@@ -206,9 +212,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js?v=6.6.0"></script>
+<script src="config.js?v=6.6.1"></script>
 <script>
-const APP_VERSION="6.6.0";
+const APP_VERSION="6.6.1";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -392,37 +398,45 @@ function renderPurchaseSummary(groups){
   const total=bought.reduce((s,x)=>s+(Number(x.p.price)||0),0);
   $("purchaseSummaryText").textContent=bought.length+" / "+DISPLAY_GROUPS.length+"種類 ・ 合計"+yen(total);
 }
+function planningValue(group,selectedColor=false){
+  const p=purchaseRecord(group.id);
+  if(p)return {value:Number(p.price)||0,label:(p.color||"購入済み")+" "+yen(Number(p.price)||0),purchased:true};
+  const offer=selectedColor?selectedVariantOffer(group):group.best;
+  if(!offer)return null;
+  return {value:effective(offer)||0,label:(offer.variant_label||"色不問")+" "+yen(effective(offer)),purchased:false};
+}
 function renderTotals(groups){
-  const valid=groups.filter(g=>g.best);
+  const baselineParts=groups.map(g=>({group:g,part:planningValue(g,false)}));
+  const baselineMissing=baselineParts.filter(x=>!x.part);
   let baseline=null;
-  if(valid.length===DISPLAY_GROUPS.length){
-    baseline=valid.reduce((s,g)=>s+(effective(g.best)||0),0);
+  if(!baselineMissing.length && baselineParts.length===DISPLAY_GROUPS.length){
+    baseline=baselineParts.reduce((s,x)=>s+x.part.value,0);
     $("allTotal").textContent=yen(baseline);
-    $("allTotalSub").textContent=valid.map(g=>g.category+" "+yen(effective(g.best))).join(" / ");
+    $("allTotalSub").textContent=baselineParts.map(x=>x.group.category+" "+(x.part.purchased?"購入済み ":"")+yen(x.part.value)).join(" / ");
   }else{
     $("allTotal").textContent="—";
-    $("allTotalSub").textContent="3種類すべての価格が揃うと計算しま";
+    $("allTotalSub").textContent="未購入商品の最安値が揃うと計算しま";
   }
 
-  const selected=groups.map(g=>({group:g,offer:selectedVariantOffer(g)}));
-  const missing=selected.filter(x=>!x.offer);
-  if(!missing.length && selected.length===DISPLAY_GROUPS.length){
-    const total=selected.reduce((s,x)=>s+(effective(x.offer)||0),0);
+  const selectedParts=groups.map(g=>({group:g,part:planningValue(g,true)}));
+  const selectedMissing=selectedParts.filter(x=>!x.part);
+  if(!selectedMissing.length && selectedParts.length===DISPLAY_GROUPS.length){
+    const total=selectedParts.reduce((s,x)=>s+x.part.value,0);
     $("selectedTotal").textContent=yen(total);
-    $("selectedTotalSub").textContent=selected.map(x=>x.group.category+" "+(x.offer.variant_label||"")+" "+yen(effective(x.offer))).join(" / ");
+    $("selectedTotalSub").textContent=selectedParts.map(x=>x.group.category+" "+(x.part.purchased?"購入済み ":"")+x.part.label).join(" / ");
     if(baseline!=null){
       const delta=total-baseline;
       $("colorDelta").textContent=(delta>0?"+":"")+yen(delta);
       $("colorDelta").className="totalnum "+(delta>0?"warn":delta<0?"ok":"");
-      $("colorDeltaSub").textContent=delta===0?"色を指定しても最安と同額ま":delta>0?"色指定で "+yen(delta)+" プラスま":"色指定の方が "+yen(Math.abs(delta))+" 安いま";
+      $("colorDeltaSub").textContent=delta===0?"色を指定しても同額ま":delta>0?"未購入品の色指定で "+yen(delta)+" プラスま":"選んだ色の方が "+yen(Math.abs(delta))+" 安いま";
     }else{
-      $("colorDelta").textContent="—";$("colorDelta").className="totalnum";$("colorDeltaSub").textContent="色無視の最安が揃うと比較しま";
+      $("colorDelta").textContent="—";$("colorDelta").className="totalnum";$("colorDeltaSub").textContent="色不問の合計が揃うと比較しま";
     }
   }else{
     $("selectedTotal").textContent="—";
-    $("selectedTotalSub").textContent="色違いのある商品で色を1つずつ選んでくだまい";
+    $("selectedTotalSub").textContent="未購入で色違いのある商品は色を1つずつ選んでくだまい";
     $("colorDelta").textContent="—";$("colorDelta").className="totalnum";
-    $("colorDeltaSub").textContent="色を選ぶと差額を表示しま";
+    $("colorDeltaSub").textContent="未購入商品の色を選ぶと差額を表示しま";
   }
 }
 function render(){
@@ -434,13 +448,21 @@ function render(){
    const last=dates.length?dates[dates.length-1]:null;
    const amazonParts=g.members.map(m=>amazonHtml(m)).filter(Boolean).join("");
    const bought=purchaseRecord(g.id);
+   const mainPrice=bought?(Number(bought.price)||0):(best?effective(best):null);
+   const mainStore=bought?(bought.store||"購入店未入力"):(best?.store_name||"");
+   const mainLabel=bought?"購入価格":"現在の最安";
+   const mainStoreLabel=bought?"購入店":"販売店";
+   const marketNote=bought&&best?'<div class="small" style="margin-top:7px">現在相場の最安：'+yen(effective(best))+' ・ '+esc(best.store_name||best.provider||"")+'</div>':'';
+   const chips=bought
+     ? '<div class="chips"><span class="chip best">✓ 購入済み</span>'+(bought.color?'<span class="chip">カラー '+esc(bought.color)+'</span>':'')+(bought.date?'<span class="chip">購入日 '+esc(bought.date)+'</span>':'')+'</div>'
+     : best?'<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+(best.manual_amazon?'':' −'+yen(best.benefit_discount))+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>':'';
    return '<section class="product">'+
      '<div class="producthead"><div><h2>'+esc(g.name)+'</h2><div class="jan">'+esc(g.category)+' ・ '+esc(janText)+'</div></div>'+(bought?'<span class="purchasedbadge">✓ 購入済み</span>':'')+'</div>'+
-     (best?'<div class="row"><div><div class="label">現在の最安</div><div class="price">'+yen(effective(best))+'</div></div><div style="text-align:right"><div class="label">販売店</div><div class="shop">'+esc(best.store_name)+'</div></div></div>'+
-       '<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+(best.manual_amazon?'':' −'+yen(best.benefit_discount))+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>'+
+     (mainPrice!=null?'<div class="row"><div><div class="label">'+mainLabel+'</div><div class="price">'+yen(mainPrice)+'</div></div><div style="text-align:right"><div class="label">'+mainStoreLabel+'</div><div class="shop">'+esc(mainStore)+'</div></div></div>'+
+       chips+marketNote+
        '<div class="history"><div class="small">'+(last?'最終確認 '+new Date(last).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        purchaseHtml(g)+variantHtml(g.id,g.offers)+offerListHtml(g.offers)+amazonParts+
-       (best.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">最安の販売先を開く</a>':'')
+       (!bought&&best?.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">最安の販売先を開く</a>':'')
      :'<div class="empty">まだ価格データがありません。</div>'+purchaseHtml(g))+
    '</section>';
  }).join("");
