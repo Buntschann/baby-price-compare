@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.7.0">
+<meta name="app-version" content="6.7.1">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -16,11 +16,11 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 .primary{background:var(--accent);color:#fff}.secondary{background:var(--soft);color:var(--text)}.ghost{background:white;border:1px solid var(--line)}.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.accountline{font-size:11px;color:var(--muted);margin-top:5px;text-align:right}
 .status{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.ok{color:var(--good)}.warn{color:var(--warn)}
 .mode{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.switch{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.switch button.active{background:var(--accent);color:white}
-.totals{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.totalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px}.totalbox{background:var(--soft);border-radius:12px;padding:11px}.totalnum{font-size:24px;font-weight:850}.purchasebar{margin-top:10px;padding:11px;border-radius:12px;background:var(--goodbg);display:flex;justify-content:space-between;gap:10px;align-items:center}.purchasebar b{color:var(--good)}.groupcheck{display:flex;gap:8px;align-items:flex-start}.colorpick{display:flex;gap:8px;align-items:center;min-width:0;flex:1}.colorpick input{width:20px;height:20px;flex:0 0 auto}.variantlink{display:flex;justify-content:space-between;gap:10px;align-items:center;min-width:0;flex:1;color:inherit;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.producthead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.purchasedbadge{display:inline-block;font-size:11px;padding:5px 8px;border-radius:999px;background:var(--goodbg);color:var(--good);font-weight:800}.purchasebox{margin-top:11px;padding:10px;border-radius:12px;background:var(--goodbg);border:1px solid #cfe7d7}.purchaseactions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.adjustbtn{padding:6px 9px;border-radius:9px;background:var(--soft);font-size:11px;font-weight:700}.adjusted{background:var(--warnbg);color:var(--warn);font-weight:800}.purchasebtn{background:var(--good);color:#fff}.danger{background:#f6e7e5;color:#8a332c}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
+.totals{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:12px}.totalgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:9px}.totalbox{background:var(--soft);border-radius:12px;padding:11px}.totalnum{font-size:24px;font-weight:850}.purchasebar{margin-top:10px;padding:11px;border-radius:12px;background:var(--goodbg);display:flex;justify-content:space-between;gap:10px;align-items:center}.purchasebar b{color:var(--good)}.savingbar{margin-top:10px;padding:11px;border-radius:12px;background:var(--soft);display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.savingnum{font-size:20px;font-weight:850}.savinggood{color:var(--good)}.savingline{margin-top:8px;padding:9px 10px;border-radius:10px;background:var(--goodbg);color:var(--good);font-size:12px;font-weight:750}.groupcheck{display:flex;gap:8px;align-items:flex-start}.colorpick{display:flex;gap:8px;align-items:center;min-width:0;flex:1}.colorpick input{width:20px;height:20px;flex:0 0 auto}.variantlink{display:flex;justify-content:space-between;gap:10px;align-items:center;min-width:0;flex:1;color:inherit;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.product{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px}.product h2{font-size:17px;margin:0 0 3px}.producthead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.purchasedbadge{display:inline-block;font-size:11px;padding:5px 8px;border-radius:999px;background:var(--goodbg);color:var(--good);font-weight:800}.purchasebox{margin-top:11px;padding:10px;border-radius:12px;background:var(--goodbg);border:1px solid #cfe7d7}.purchaseactions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.adjustbtn{padding:6px 9px;border-radius:9px;background:var(--soft);font-size:11px;font-weight:700}.adjusted{background:var(--warnbg);color:var(--warn);font-weight:800}.purchasebtn{background:var(--good);color:#fff}.danger{background:#f6e7e5;color:#8a332c}.jan{font-size:11px;color:var(--muted);margin-bottom:12px}
 .price{font-size:27px;font-weight:850;letter-spacing:-.03em}.label{font-size:11px;color:var(--muted)}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-end}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.chip{font-size:10px;padding:4px 7px;border-radius:999px;background:var(--soft)}.best{background:var(--goodbg);color:var(--good);font-weight:800}.history{margin-top:11px;border-top:1px solid var(--line);padding-top:10px}.shop{font-weight:750}.link{display:inline-block;margin-top:10px;color:inherit;text-decoration:underline;text-underline-offset:3px}
 .empty{padding:28px 8px;text-align:center;color:var(--muted)}.footer{margin-top:18px;font-size:11px;color:var(--muted);line-height:1.55}
 .offerlist{margin-top:9px;border-top:1px solid var(--line)}.offerrow{padding:9px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.2fr .9fr auto;gap:8px;align-items:center}.offerrow:last-child{border-bottom:0}.offerprice{font-weight:800;text-align:right}.offerlink{font-size:12px;color:inherit;text-decoration:underline}.variantgrid{display:grid;gap:7px;margin-top:9px}.variantrow{display:flex;justify-content:space-between;gap:10px;background:var(--soft);padding:9px;border-radius:10px;align-items:center;color:inherit;text-decoration:none}.variantstore{font-size:11px;color:var(--muted);margin-top:2px}.variantprice{text-align:right;white-space:nowrap}.variantprice b{font-size:13px}.variantgo{font-size:11px;color:var(--muted);margin-top:2px}.amazonbox{margin-top:12px;padding:10px;border:1px dashed var(--line);border-radius:12px;background:#fffaf4}.amazonhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.amazonrow{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.amazonrow:first-child{border-top:0}.amazonlink{display:inline-block;padding:7px 10px;border-radius:9px;background:var(--soft);color:inherit;text-decoration:none;font-size:12px;font-weight:700}.amazonactions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.amazonedit{padding:7px 10px;border-radius:9px;background:var(--accent);color:#fff;font-size:12px;font-weight:700}.amazonmeta{margin-top:3px}.amazonprice{font-weight:850}.manual{background:#fff7e8}.modalback{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:flex-end;justify-content:center;padding:12px;z-index:20}.modal{width:min(520px,100%);background:#fff;border-radius:18px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.2)}.modal h3{margin:0 0 4px}.historymodal{align-items:center}.historycard{max-height:min(80vh,720px);overflow:auto}.historyhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.historyentry{padding:12px 0;border-top:1px solid var(--line)}.historyentry:first-of-type{border-top:0}.historyentry.latest{background:var(--goodbg);margin:0 -8px;padding:12px 8px;border-radius:12px}.versionline{display:flex;gap:8px;align-items:center;margin-bottom:6px}.versionline span{font-size:10px;padding:3px 6px;border-radius:999px;background:var(--good);color:#fff;font-weight:800}.historyentry ul{margin:6px 0 0;padding-left:20px}.historyentry li{margin:4px 0;font-size:13px;line-height:1.45}.field{margin-top:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input[type=number],.field input[type=text],.field input[type=date],.field input[type=url],.field select,.field textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff}.field textarea{min-height:86px;resize:vertical}.checkrow{display:flex;gap:8px;align-items:center;margin-top:12px}.modalactions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-@media(max-width:700px){header{display:block}header .actions{margin-top:9px}.totalgrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.switch button{flex:1}.status{align-items:flex-start;flex-direction:column}}
+@media(max-width:700px){header{display:block}header .actions{margin-top:9px}.totalgrid,.savingbar{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.switch button{flex:1}.status{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
@@ -49,7 +49,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.7.0</div>
+    <div class="small" id="appVersion">アプリ v6.7.1</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -75,12 +75,17 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
     <div class="totalbox"><div class="label">色指定による差額</div><div class="totalnum" id="colorDelta">—</div><div class="small" id="colorDeltaSub">色無視の最安との差</div></div>
   </div>
   <div class="purchasebar"><div><b>購入済み</b><div class="small" id="purchaseSummaryText">0 / 3種類 ・ 合計0円</div></div><div class="small">家族2人で共有同期</div></div>
+  <div class="savingbar">
+    <div><div class="label">メーカー希望小売価格 合計</div><div class="savingnum" id="msrpTotal">—</div></div>
+    <div><div class="label">購入済み＋残り最安</div><div class="savingnum" id="planTotalForSaving">—</div></div>
+    <div><div class="label">定価よりお得</div><div class="savingnum savinggood" id="savingTotal">—</div><div class="small" id="savingTotalPct"></div></div>
+  </div>
 </div>
 
 <div id="products" class="grid"></div>
 <div class="footer">
   ※Yahoo!ショッピングのクーポン・支払い方法・個別キャンペーン等、APIで確定取得できない特典は「特典を補正」から手入力できます。「全ポイント込み」では追加ポイントも差し引いて比較します。<br>
-  ※Amazonの手入力値はこの端末内に保存。購入済み情報はログイン中の家族だけがアクセスできる共有データとして保存します。らくベビは「クーポン後価格から10%OFF・最大1万円」として概算し、Amazon画面で対象外の場合はチェックを外してください。<br>※「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
+  ※Amazonの手入力値はこの端末内に保存。購入済み情報はログイン中の家族だけがアクセスできる共有データとして保存します。らくベビは「クーポン後価格から10%OFF・最大1万円」として概算し、Amazon画面で対象外の場合はチェックを外してください。<br>※「定価」はメーカー希望小売価格（税込）を基準にしています。「最安」は監視対象サービスから取得できた新品・在庫あり候補の中での最安です。<br><a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>
 </div>
 </div>
 </div>
@@ -91,9 +96,15 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.0</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.1</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.7.0</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.7.1</b><span>最新</span></div><ul>
+      <li>メーカー希望小売価格と比べたお得額を追加</li>
+      <li>各商品に「定価より○円お得・○%OFF」を表示</li>
+      <li>3種類まとめた定価合計・見込み総額・合計お得額を表示</li>
+      <li>ラクリスABはトープベージュのみ異なる定価にも対応</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.7.0</b></div><ul>
       <li>Yahoo!の期間限定クーポンを手入力補正できるように</li>
       <li>PayPayクレジット等の追加ポイントを補正可能に</li>
       <li>5のつく日などその他キャンペーンポイントも補正可能に</li>
@@ -231,9 +242,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js?v=6.7.0"></script>
+<script src="config.js?v=6.7.1"></script>
 <script>
-const APP_VERSION="6.7.0";
+const APP_VERSION="6.7.1";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -454,6 +465,25 @@ function renderPurchaseSummary(groups){
   const total=bought.reduce((s,x)=>s+(Number(x.p.price)||0),0);
   $("purchaseSummaryText").textContent=bought.length+" / "+DISPLAY_GROUPS.length+"種類 ・ 合計"+yen(total);
 }
+function msrpFor(group,colorLabel=""){
+  if(group.id==="carseat")return 69300;
+  if(group.id==="stroller")return 57200;
+  if(group.id==="carrier")return String(colorLabel||"").includes("トープベージュ")?33880:32780;
+  return 0;
+}
+function referenceColorFor(group,selectedColor=false){
+  const p=purchaseRecord(group.id);
+  if(p?.color)return p.color;
+  const offer=selectedColor?selectedVariantOffer(group):group.best;
+  return offer?.variant_label||colorSelections[group.id]||"";
+}
+function savingInfo(group,price,selectedColor=false){
+  const msrp=msrpFor(group,referenceColorFor(group,selectedColor));
+  if(!msrp||price==null)return null;
+  const saving=msrp-Number(price);
+  const pct=msrp?Math.max(0,saving)/msrp*100:0;
+  return {msrp,saving,pct};
+}
 function planningValue(group,selectedColor=false){
   const p=purchaseRecord(group.id);
   if(p)return {value:Number(p.price)||0,label:(p.color||"購入済み")+" "+yen(Number(p.price)||0),purchased:true};
@@ -469,9 +499,17 @@ function renderTotals(groups){
     baseline=baselineParts.reduce((s,x)=>s+x.part.value,0);
     $("allTotal").textContent=yen(baseline);
     $("allTotalSub").textContent=baselineParts.map(x=>x.group.category+" "+(x.part.purchased?"購入済み ":"")+yen(x.part.value)).join(" / ");
+    const msrpTotal=baselineParts.reduce((s,x)=>s+msrpFor(x.group,referenceColorFor(x.group,false)),0);
+    const saving=msrpTotal-baseline;
+    $("msrpTotal").textContent=yen(msrpTotal);
+    $("planTotalForSaving").textContent=yen(baseline);
+    $("savingTotal").textContent=(saving>=0?"":"+")+yen(Math.abs(saving));
+    $("savingTotal").className="savingnum "+(saving>=0?"savinggood":"warn");
+    $("savingTotalPct").textContent=saving>=0?((saving/msrpTotal)*100).toFixed(1)+"%OFF":"定価より "+yen(Math.abs(saving))+" 高いま";
   }else{
     $("allTotal").textContent="—";
     $("allTotalSub").textContent="未購入商品の最安値が揃うと計算しま";
+    $("msrpTotal").textContent="—";$("planTotalForSaving").textContent="—";$("savingTotal").textContent="—";$("savingTotalPct").textContent="";
   }
 
   const selectedParts=groups.map(g=>({group:g,part:planningValue(g,true)}));
@@ -509,13 +547,17 @@ function render(){
    const mainLabel=bought?"購入価格":"現在の最安";
    const mainStoreLabel=bought?"購入店":"販売店";
    const marketNote=bought&&best?'<div class="small" style="margin-top:7px">現在相場の最安：'+yen(effective(best))+' ・ '+esc(best.store_name||best.provider||"")+'</div>':'';
+   const si=mainPrice!=null?savingInfo(g,mainPrice,false):null;
+   const savingLine=si?(si.saving>=0
+     ?'<div class="savingline">定価 '+yen(si.msrp)+' → '+(bought?'購入 ':'現在最安 ')+yen(mainPrice)+' ・ '+yen(si.saving)+'お得（'+si.pct.toFixed(1)+'%OFF）</div>'
+     :'<div class="small warn" style="margin-top:8px">定価 '+yen(si.msrp)+' より '+yen(Math.abs(si.saving))+'高いま</div>'):'';
    const chips=bought
      ? '<div class="chips"><span class="chip best">✓ 購入済み</span>'+(bought.color?'<span class="chip">カラー '+esc(bought.color)+'</span>':'')+(bought.date?'<span class="chip">購入日 '+esc(bought.date)+'</span>':'')+'</div>'
      : best?'<div class="chips"><span class="chip best">'+esc(best.provider)+'</span><span class="chip">本体 '+yen(best.price)+'</span><span class="chip">送料 '+yen(best.shipping||0)+'</span>'+(best.benefit_discount?'<span class="chip best">'+esc(best.benefit_label||"特典値引き")+(best.manual_amazon?'':' −'+yen(best.benefit_discount))+'</span>':'')+'<span class="chip">通常 '+Math.round(best.normal_points||0).toLocaleString()+'pt</span><span class="chip">限定 '+Math.round(best.limited_points||0).toLocaleString()+'pt</span>'+(best.variant_label?'<span class="chip">カラー '+esc(best.variant_label)+'</span>':'')+'</div>':'';
    return '<section class="product">'+
      '<div class="producthead"><div><h2>'+esc(g.name)+'</h2><div class="jan">'+esc(g.category)+' ・ '+esc(janText)+'</div></div>'+(bought?'<span class="purchasedbadge">✓ 購入済み</span>':'')+'</div>'+
      (mainPrice!=null?'<div class="row"><div><div class="label">'+mainLabel+'</div><div class="price">'+yen(mainPrice)+'</div></div><div style="text-align:right"><div class="label">'+mainStoreLabel+'</div><div class="shop">'+esc(mainStore)+'</div></div></div>'+
-       chips+marketNote+
+       chips+savingLine+marketNote+
        '<div class="history"><div class="small">'+(last?'最終確認 '+new Date(last).toLocaleString("ja-JP"):'未確認')+'</div></div>'+
        purchaseHtml(g)+variantHtml(g.id,g.offers)+offerListHtml(g.offers)+amazonParts+
        (!bought&&best?.url?'<a class="link" href="'+esc(best.url)+'" target="_blank" rel="noopener">最安の販売先を開く</a>':'')
