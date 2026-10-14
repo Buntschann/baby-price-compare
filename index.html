@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.7.2">
+<meta name="app-version" content="6.7.3">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -49,7 +49,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.7.2</div>
+    <div class="small" id="appVersion">アプリ v6.7.3</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -96,9 +96,14 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.2</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.3</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.7.2</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.7.3</b><span>最新</span></div><ul>
+      <li>公式カラーは価格未取得でも「色ごとの最安」に必ず表示</li>
+      <li>クルムーヴのグレージュ（BE）を色選択欄へ追加</li>
+      <li>価格未取得の色も選択可能にし、価格が取れたら自動で最安へ反映</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.7.2</b></div><ul>
       <li>クルムーヴ コンパクト JSに公式限定カラー「グレージュ（BE）」を追加</li>
       <li>JAN 4972990198066 を価格監視対象に追加</li>
       <li>ブラック／ブラウン／グレージュの3色で最安比較</li>
@@ -248,9 +253,9 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js?v=6.7.2"></script>
+<script src="config.js?v=6.7.3"></script>
 <script>
-const APP_VERSION="6.7.2";
+const APP_VERSION="6.7.3";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
@@ -263,6 +268,11 @@ const DISPLAY_GROUPS=[
  {id:"carseat",name:"クルムーヴ コンパクト JS",category:"チャイルドシート",members:["culmove-js-black","culmove-js-brown","culmove-js-greige"]},
  {id:"carrier",name:"ラクリス AB",category:"抱っこ紐",members:["laclis-ab-black"]}
 ];
+const OFFICIAL_VARIANTS={
+  stroller:["ブルー BL"],
+  carseat:["ブラック BK","ブラウン BR","グレージュ BE"],
+  carrier:["ブラック","ホワイトアッシュ","クラウドグレー","ネイビー","ベージュ","トープベージュ","ベージュピンク","グリーンティント"]
+};
 const COLOR_SELECTION_KEY="babyPriceWatchColorSelectionV1";
 function loadColorSelections(){try{return JSON.parse(localStorage.getItem(COLOR_SELECTION_KEY)||"{}")}catch{return {}}}
 function saveColorSelections(){localStorage.setItem(COLOR_SELECTION_KEY,JSON.stringify(colorSelections))}
@@ -416,17 +426,26 @@ function groupedVariants(offers){
     const prev=grouped.get(key);
     if(!prev || (effective(o)??Infinity)<(effective(prev)??Infinity)) grouped.set(key,o);
   }
-  return [...grouped.entries()].sort((a,b)=>a[0].localeCompare(b[0],"ja"));
+  return grouped;
+}
+function variantRows(groupId,offers){
+  const grouped=groupedVariants(offers);
+  const official=OFFICIAL_VARIANTS[groupId]||[];
+  const labels=[...official];
+  for(const key of grouped.keys())if(!labels.includes(key))labels.push(key);
+  return labels.map(label=>[label,grouped.get(label)||null]);
 }
 function variantHtml(groupId,offers){
-  const rows=groupedVariants(offers);
+  const rows=variantRows(groupId,offers);
   if(!rows.length)return "";
   const selectable=rows.length>1;
   return '<details style="margin-top:10px" open><summary style="cursor:pointer;font-weight:700">色ごとの最安を見る'+(selectable?' ・ 色を選ぶ':'')+'</summary><div class="variantgrid">'+rows.map(([label,o])=>{
     const checked=colorSelections[groupId]===label?' checked':'';
     const picker=selectable?'<input type="checkbox" data-color-select="'+esc(groupId)+'" data-variant-label="'+esc(label)+'"'+checked+' aria-label="'+esc(label)+'を選ぶ">':'';
-    const info='<div><b>'+esc(label)+'</b><div class="variantstore">'+esc(o.store_name||o.provider||"販売店")+' ・ '+esc(o.provider||"")+'</div></div><div class="variantprice"><b>'+yen(effective(o))+'</b><div class="variantgo">'+(o.url?"商品ページへ ›":"")+'</div></div>';
-    const link=o.url?'<a class="variantlink" href="'+esc(o.url)+'" target="_blank" rel="noopener">'+info+'</a>':'<div class="variantlink">'+info+'</div>';
+    const info=o
+      ? '<div><b>'+esc(label)+'</b><div class="variantstore">'+esc(o.store_name||o.provider||"販売店")+' ・ '+esc(o.provider||"")+'</div></div><div class="variantprice"><b>'+yen(effective(o))+'</b><div class="variantgo">'+(o.url?"商品ページへ ›":"")+'</div></div>'
+      : '<div><b>'+esc(label)+'</b><div class="variantstore">価格未取得</div></div><div class="variantprice"><b>—</b><div class="variantgo">色は選択できま</div></div>';
+    const link=o?.url?'<a class="variantlink" href="'+esc(o.url)+'" target="_blank" rel="noopener">'+info+'</a>':'<div class="variantlink">'+info+'</div>';
     return '<div class="variantrow"><div class="colorpick">'+picker+link+'</div></div>';
   }).join("")+'</div></details>';
 }
@@ -454,7 +473,7 @@ function groupData(){
   });
 }
 function selectedVariantOffer(group){
-  const rows=groupedVariants(group.offers);
+  const rows=variantRows(group.id,group.offers);
   if(rows.length<=1)return rows[0]?.[1]||group.best||null;
   const wanted=colorSelections[group.id];
   return wanted ? (rows.find(([label])=>label===wanted)?.[1]||null) : null;
