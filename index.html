@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ベビー価格ウォッチ">
 <meta name="theme-color" content="#f6f3ee">
-<meta name="app-version" content="6.7.1">
+<meta name="app-version" content="6.7.2">
 <title>ベビー価格ウォッチ</title>
 <style>
 :root{--bg:#f6f3ee;--card:#fff;--text:#27231f;--muted:#746f68;--line:#e3ddd4;--accent:#5a5148;--soft:#f0ebe4;--good:#287047;--goodbg:#e9f5ed;--warn:#94610c;--warnbg:#fff4da}
@@ -49,7 +49,7 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
   <div><b id="statusTitle">バックエンド未接続</b><div class="small" id="statusText">Supabase設定後、自動監視が有効になります。</div></div>
   <div style="text-align:right">
     <div class="small" id="lastChecked">最終確認：—</div>
-    <div class="small" id="appVersion">アプリ v6.7.1</div>
+    <div class="small" id="appVersion">アプリ v6.7.2</div>
   </div>
 </div>
 <div class="status" id="updateBox" style="display:none">
@@ -96,9 +96,15 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
       <div><div class="small">BABY PRICE WATCH</div><h3>アップデート履歴</h3></div>
       <button class="secondary" id="updatesCloseBtn">閉じる</button>
     </div>
-    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.1</b></div>
+    <div class="small" style="margin-bottom:8px">現在のバージョン <b>v6.7.2</b></div>
 
-    <section class="historyentry latest"><div class="versionline"><b>v6.7.1</b><span>最新</span></div><ul>
+    <section class="historyentry latest"><div class="versionline"><b>v6.7.2</b><span>最新</span></div><ul>
+      <li>クルムーヴ コンパクト JSに公式限定カラー「グレージュ（BE）」を追加</li>
+      <li>JAN 4972990198066 を価格監視対象に追加</li>
+      <li>ブラック／ブラウン／グレージュの3色で最安比較</li>
+      <li>グレージュのAmazon確認リンクを追加</li>
+    </ul></section>
+    <section class="historyentry"><div class="versionline"><b>v6.7.1</b></div><ul>
       <li>メーカー希望小売価格と比べたお得額を追加</li>
       <li>各商品に「定価より○円お得・○%OFF」を表示</li>
       <li>3種類まとめた定価合計・見込み総額・合計お得額を表示</li>
@@ -242,18 +248,19 @@ header{display:flex;justify-content:space-between;gap:12px;align-items:flex-star
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js?v=6.7.1"></script>
+<script src="config.js?v=6.7.2"></script>
 <script>
-const APP_VERSION="6.7.1";
+const APP_VERSION="6.7.2";
 const PRODUCTS=[
  {id:"culmove-js-black",name:"クルムーヴ コンパクト JS（黒）",jan:"4972990196710",category:"チャイルドシート"},
  {id:"culmove-js-brown",name:"クルムーヴ コンパクト JS（茶）",jan:"4972990196727",category:"チャイルドシート"},
+ {id:"culmove-js-greige",name:"クルムーヴ コンパクト JS（グレージュ）",jan:"4972990198066",category:"チャイルドシート"},
  {id:"luxuna-air-plus-blue",name:"ラクーナ エアー プラス（青）",jan:"4969220010212",category:"ベビーカー"},
  {id:"laclis-ab-black",name:"ラクリス AB",jan:"4969220010663",category:"抱っこ紐"}
 ];
 const DISPLAY_GROUPS=[
  {id:"stroller",name:"ラクーナ エアー プラス",category:"ベビーカー",members:["luxuna-air-plus-blue"]},
- {id:"carseat",name:"クルムーヴ コンパクト JS",category:"チャイルドシート",members:["culmove-js-black","culmove-js-brown"]},
+ {id:"carseat",name:"クルムーヴ コンパクト JS",category:"チャイルドシート",members:["culmove-js-black","culmove-js-brown","culmove-js-greige"]},
  {id:"carrier",name:"ラクリス AB",category:"抱っこ紐",members:["laclis-ab-black"]}
 ];
 const COLOR_SELECTION_KEY="babyPriceWatchColorSelectionV1";
@@ -334,6 +341,7 @@ async function migrateLegacyPurchases(){
 const AMAZON_REFERENCES={
  "culmove-js-black":[{label:"ブラック",variant_label:"ブラック BK",asin:"B0i3XY99N",url:"https://link.amazon/B0i3XY99N"}],
  "culmove-js-brown":[{label:"ブラウン",variant_label:"ブラウン BR",asin:"B082CnKey",url:"https://link.amazon/B082CnKey"}],
+ "culmove-js-greige":[{label:"グレージュ",variant_label:"グレージュ BE",asin:"03UCcSfj",url:"https://amzn.asia/d/03UCcSfj"}],
  "luxuna-air-plus-blue":[{label:"ブルー",variant_label:"ブルー BL",asin:"B07oWt7Be",url:"https://link.amazon/B07oWt7Be"}],
  "laclis-ab-black":[
    {label:"ブラック",variant_label:"ブラック",asin:"B0iBdmhC5",url:"https://link.amazon/B0iBdmhC5"},
